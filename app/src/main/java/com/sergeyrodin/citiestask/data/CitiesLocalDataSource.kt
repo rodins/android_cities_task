@@ -6,25 +6,26 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class CitiesLocalDataSource(private val databaseDao: CitiesDatabaseDao,
-                            private val dispatcher: CoroutineDispatcher = Dispatchers.IO ) {
+                            private val dispatcher: CoroutineDispatcher = Dispatchers.IO ) :
+    CitiesDataSource {
 
-    suspend fun insertCountry(country: Country) {
+    override suspend fun insertCountry(country: Country) {
         withContext(dispatcher) {
             databaseDao.insertCountry(country)
         }
     }
 
-    fun getCountries(): LiveData<List<Country>> {
+    override fun getCountries(): LiveData<List<Country>> {
         return databaseDao.getCountries()
     }
 
-    suspend fun insertCity(city: City) {
+    override suspend fun insertCity(city: City) {
         withContext(dispatcher) {
             databaseDao.insertCity(city)
         }
     }
 
-    suspend fun getCitiesByCountryId(countryId: Int): List<City> {
+    override suspend fun getCitiesByCountryId(countryId: Int): List<City> {
         var output = listOf<City>()
         withContext(dispatcher) {
            output = databaseDao.getCitiesByCountryId(countryId)
