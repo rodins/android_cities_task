@@ -1,4 +1,4 @@
-package com.sergeyrodin.citiestask.data
+package com.sergeyrodin.citiestask.data.source.local
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -18,5 +18,5 @@ class City (
     var id: Int = 0,
     var name: String,
     @ColumnInfo(name = "country_id", index = true)
-    var countryId: Int
+    var countryId: Long
 )

@@ -1,4 +1,4 @@
-package com.sergeyrodin.citiestask.data
+package com.sergeyrodin.citiestask.data.source.local
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
@@ -8,7 +8,7 @@ import androidx.room.Query
 @Dao
 interface CitiesDatabaseDao {
     @Insert
-    fun insertCountry(country: Country)
+    fun insertCountry(country: Country): Long
 
     @Query("SELECT * FROM countries")
     fun getCountries(): LiveData<List<Country>>
@@ -17,5 +17,5 @@ interface CitiesDatabaseDao {
     fun insertCity(city: City)
 
     @Query("SELECT * FROM cities WHERE country_id = :countryId")
-    fun getCitiesByCountryId(countryId: Int): List<City>
+    fun getCitiesByCountryId(countryId: Long): List<City>
 }

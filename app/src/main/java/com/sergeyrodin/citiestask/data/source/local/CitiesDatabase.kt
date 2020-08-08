@@ -1,4 +1,4 @@
-package com.sergeyrodin.citiestask.data
+package com.sergeyrodin.citiestask.data.source.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

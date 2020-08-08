@@ -1,4 +1,4 @@
-package com.sergeyrodin.citiestask.data
+package com.sergeyrodin.citiestask.data.source.local
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
@@ -36,7 +36,8 @@ class CitiesDatabaseDaoTest {
 
     @Test
     fun insertAndGetCountry() {
-        val country = Country(1, "Country")
+        val country =
+            Country(1, "Country")
 
         citiesDatabase.citiesDatabaseDao.insertCountry(country)
 
@@ -46,8 +47,13 @@ class CitiesDatabaseDaoTest {
 
     @Test
     fun insertAndGetCity() {
-        val country = Country(1, "Country")
-        val city = City(1, "City", country.id)
+        val country =
+            Country(1, "Country")
+        val city = City(
+            1,
+            "City",
+            country.id
+        )
         citiesDatabase.citiesDatabaseDao.insertCountry(country)
         citiesDatabase.citiesDatabaseDao.insertCity(city)
 

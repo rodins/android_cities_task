@@ -1,4 +1,4 @@
-package com.sergeyrodin.citiestask.data
+package com.sergeyrodin.citiestask.data.source.local
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
@@ -34,7 +34,11 @@ class CitiesLocalDataSourceTest {
             CitiesDatabase::class.java)
             .allowMainThreadQueries()
             .build()
-        subject = CitiesLocalDataSource(citiesDatabase.citiesDatabaseDao, Dispatchers.Unconfined)
+        subject =
+            CitiesLocalDataSource(
+                citiesDatabase.citiesDatabaseDao,
+                Dispatchers.Unconfined
+            )
     }
 
     @After
@@ -42,7 +46,8 @@ class CitiesLocalDataSourceTest {
 
     @Test
     fun insertAndGetCountry() = runBlockingTest{
-        val country = Country(1, "Country")
+        val country =
+            Country(1, "Country")
         subject.insertCountry(country)
 
         val countries = subject.getCountries().getOrAwaitValue()
@@ -51,8 +56,13 @@ class CitiesLocalDataSourceTest {
 
     @Test
     fun insertAndGetCity() = runBlockingTest{
-        val country = Country(1, "Country")
-        val city = City(1, "City", country.id)
+        val country =
+            Country(1, "Country")
+        val city = City(
+            1,
+            "City",
+            country.id
+        )
         subject.insertCountry(country)
         subject.insertCity(city)
 
