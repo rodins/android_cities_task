@@ -8,17 +8,21 @@ import com.sergeyrodin.citiestask.data.source.remote.ICitiesRemoteDataSource
 
 class CitiesDefaultRepository(private val remoteDataSource: ICitiesRemoteDataSource,
                               private val localDataSource: ICitiesLocalDataSource
-) {
+) : CitiesRepository {
 
-    fun getCountries(): LiveData<List<Country>> {
+    override fun getCountries(): LiveData<List<Country>> {
         return localDataSource.getCountries()
     }
 
-    suspend fun getCitiesByCountryId(countryId: Long): List<City> {
+    override fun getJsonText(): LiveData<String> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getCitiesByCountryId(countryId: Long): List<City> {
         return localDataSource.getCitiesByCountryId(countryId)
     }
 
-    suspend fun loadCountriesAndCitiesToDb() {
+    override suspend fun loadCountriesAndCitiesToDb() {
         val countries = remoteDataSource.getCountries()
         countries.forEach { countryRemote ->
             val country = Country(name = countryRemote.name)
