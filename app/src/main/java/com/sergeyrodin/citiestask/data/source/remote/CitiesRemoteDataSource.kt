@@ -11,22 +11,13 @@ object CitiesRemoteDataSource: ICitiesRemoteDataSource {
         TODO("Not yet implemented")
     }
 
-    override fun getJsonText(): LiveData<String> {
-        val output = MutableLiveData<String>()
-
-        CitiesApi.retrofitService.getCities().enqueue( object: Callback<Map<String, List<String>>> {
-            override fun onFailure(call: Call<Map<String, List<String>>>, t: Throwable) {
-                output.value = "Failure: " + t.message
-            }
-
-            override fun onResponse(call: Call<Map<String, List<String>>>, response: Response<Map<String, List<String>>>) {
-                response.body()?.let{ countries ->
-                    output.value = countries.get("Ukraine")?.get(0)
-                }
-                //output.value = "Success: ${response.body()?.size} countries retrieved"
-            }
-        })
-
-        return output
+    override suspend fun getJsonText(): String {
+        val getCountriesDeferred = CitiesApi.retrofitService.getCities()
+        try {
+            val countries = getCountriesDeferred.await()
+            return countries.get("Ukraine")?.get(0)?:""
+        }catch(e: Exception) {
+            return "Failure: ${e.message}"
+        }
     }
 }

@@ -14,7 +14,7 @@ class CitiesDefaultRepository(private val remoteDataSource: ICitiesRemoteDataSou
         return localDataSource.getCountries()
     }
 
-    override fun getJsonText(): LiveData<String> {
+    override suspend fun getJsonText(): String {
         return remoteDataSource.getJsonText()
     }
 

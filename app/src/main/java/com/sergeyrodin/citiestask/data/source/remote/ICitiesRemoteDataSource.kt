@@ -5,5 +5,5 @@ import androidx.lifecycle.LiveData
 interface ICitiesRemoteDataSource {
     fun getCountries(): Map<String, List<String>>
 
-    fun getJsonText(): LiveData<String>
+    suspend fun getJsonText(): String
 }
