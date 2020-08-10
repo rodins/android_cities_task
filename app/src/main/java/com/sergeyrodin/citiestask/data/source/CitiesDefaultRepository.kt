@@ -15,7 +15,7 @@ class CitiesDefaultRepository(private val remoteDataSource: ICitiesRemoteDataSou
     }
 
     override fun getJsonText(): LiveData<String> {
-        TODO("Not yet implemented")
+        return remoteDataSource.getJsonText()
     }
 
     override suspend fun getCitiesByCountryId(countryId: Long): List<City> {

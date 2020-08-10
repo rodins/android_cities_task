@@ -12,21 +12,8 @@ import retrofit2.Response
 
 class CountriesListViewModel(repository: CitiesRepository): ViewModel() {
 
-    private val _response = MutableLiveData<String>()
-    val response: LiveData<String>
-        get() = _response
+    val response = repository.getJsonText()
 
-    init {
-        CitiesApi.retrofitService.getCities().enqueue( object: Callback<String> {
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                _response.value = "Failure: " + t.message
-            }
-
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                _response.value = response.body()
-            }
-        })
-    }
 }
 
 class CountriesListViewModelFactory(private val repository: CitiesRepository): ViewModelProvider.Factory {
