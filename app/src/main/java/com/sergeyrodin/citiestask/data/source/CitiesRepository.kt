@@ -10,6 +10,10 @@ interface CitiesRepository {
 
     suspend fun getCountries(): List<Country>
 
+    suspend fun insertCountry(country: Country): Long
+
+    suspend fun insertCity(city: City)
+
     suspend fun getCitiesByCountryId(countryId: Long): List<City>
 
     suspend fun loadCountriesAndCitiesToDb()

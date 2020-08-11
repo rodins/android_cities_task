@@ -23,6 +23,14 @@ class CitiesDefaultRepository(private val remoteDataSource: ICitiesRemoteDataSou
         return localDataSource.getCitiesByCountryId(countryId)
     }
 
+    override suspend fun insertCountry(country: Country): Long {
+        return localDataSource.insertCountry(country)
+    }
+
+    override suspend fun insertCity(city: City) {
+        localDataSource.insertCity(city)
+    }
+
     override suspend fun loadCountriesAndCitiesToDb() {
         val countries = remoteDataSource.getCountries()
         countries.keys.forEach { countryName ->

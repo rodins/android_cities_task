@@ -41,7 +41,7 @@ class CitiesDatabaseDaoTest {
 
         citiesDatabase.citiesDatabaseDao.insertCountry(country)
 
-        val list = citiesDatabase.citiesDatabaseDao.getCountries().getOrAwaitValue()
+        val list = citiesDatabase.citiesDatabaseDao.getCountries()
         assertThat(list[0].name, `is`(country.name))
     }
 
