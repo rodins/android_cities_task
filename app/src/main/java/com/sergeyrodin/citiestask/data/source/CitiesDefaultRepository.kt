@@ -4,6 +4,7 @@ import com.sergeyrodin.citiestask.data.source.local.City
 import com.sergeyrodin.citiestask.data.source.local.Country
 import com.sergeyrodin.citiestask.data.source.local.ICitiesLocalDataSource
 import com.sergeyrodin.citiestask.data.source.remote.ICitiesRemoteDataSource
+import com.sergeyrodin.citiestask.util.wrapEspressoIdlingResource
 
 class CitiesDefaultRepository(private val remoteDataSource: ICitiesRemoteDataSource,
                               private val localDataSource: ICitiesLocalDataSource
@@ -12,33 +13,43 @@ class CitiesDefaultRepository(private val remoteDataSource: ICitiesRemoteDataSou
     override val error = remoteDataSource.error
 
     override suspend fun getCountries(): List<Country> {
-        val countries = localDataSource.getCountries()
-        if(countries.isEmpty()) {
-            remoteDataSource.getCountries()
+        wrapEspressoIdlingResource {
+            val countries = localDataSource.getCountries()
+            if(countries.isEmpty()) {
+                remoteDataSource.getCountries()
+            }
+            return countries
         }
-        return countries
     }
 
     override suspend fun getCitiesByCountryId(countryId: Long): List<City> {
-        return localDataSource.getCitiesByCountryId(countryId)
+        wrapEspressoIdlingResource {
+            return localDataSource.getCitiesByCountryId(countryId)
+        }
     }
 
     override suspend fun insertCountry(country: Country): Long {
-        return localDataSource.insertCountry(country)
+        wrapEspressoIdlingResource {
+            return localDataSource.insertCountry(country)
+        }
     }
 
     override suspend fun insertCity(city: City) {
-        localDataSource.insertCity(city)
+        wrapEspressoIdlingResource {
+            localDataSource.insertCity(city)
+        }
     }
 
     override suspend fun loadCountriesAndCitiesToDb() {
-        val countries = remoteDataSource.getCountries()
-        countries.keys.forEach { countryName ->
-            val country = Country(name = countryName)
-            val countryId = localDataSource.insertCountry(country)
-            countries[countryName]?.forEach { cityName ->
-                val city = City(name = cityName, countryId = countryId)
-                localDataSource.insertCity(city)
+        wrapEspressoIdlingResource {
+            val countries = remoteDataSource.getCountries()
+            countries.keys.forEach { countryName ->
+                val country = Country(name = countryName)
+                val countryId = localDataSource.insertCountry(country)
+                countries[countryName]?.forEach { cityName ->
+                    val city = City(name = cityName, countryId = countryId)
+                    localDataSource.insertCity(city)
+                }
             }
         }
     }
