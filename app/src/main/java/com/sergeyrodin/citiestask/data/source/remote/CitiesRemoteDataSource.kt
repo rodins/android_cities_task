@@ -1,16 +1,24 @@
 package com.sergeyrodin.citiestask.data.source.remote
 
-object CitiesRemoteDataSource: ICitiesRemoteDataSource {
-    override fun getCountries(): Map<String, List<String>> {
-        TODO("Not yet implemented")
-    }
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 
-    override suspend fun getJsonText(): String {
-        return try {
+object CitiesRemoteDataSource: ICitiesRemoteDataSource {
+
+    private val _status = MutableLiveData<String>()
+    override val status: LiveData<String>
+        get() = _status
+
+    override suspend fun getCountries(): Map<String, List<String>> {
+        try{
+            _status.value = "Loading..."
             val countries = CitiesApi.retrofitService.getCities()
-            countries["Ukraine"]?.get(0)?:""
+            _status.value = countries["Ukraine"]?.get(0)?:""
+            return countries
         }catch(e: Exception) {
-            "Failure: ${e.message}"
+            _status.value = "Failure: ${e.message}"
         }
+        return mapOf()
     }
 }
+

@@ -3,7 +3,7 @@ package com.sergeyrodin.citiestask.data.source.remote
 import androidx.lifecycle.LiveData
 
 interface ICitiesRemoteDataSource {
-    fun getCountries(): Map<String, List<String>>
+    val status: LiveData<String>
 
-    suspend fun getJsonText(): String
+    suspend fun getCountries(): Map<String, List<String>>
 }

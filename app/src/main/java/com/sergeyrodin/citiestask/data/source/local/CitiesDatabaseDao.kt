@@ -11,7 +11,7 @@ interface CitiesDatabaseDao {
     fun insertCountry(country: Country): Long
 
     @Query("SELECT * FROM countries")
-    fun getCountries(): LiveData<List<Country>>
+    fun getCountries(): List<Country>
 
     @Insert
     fun insertCity(city: City)

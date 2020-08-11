@@ -5,9 +5,9 @@ import com.sergeyrodin.citiestask.data.source.local.City
 import com.sergeyrodin.citiestask.data.source.local.Country
 
 interface CitiesRepository {
-    fun getCountries(): LiveData<List<Country>>
+    val status: LiveData<String>
 
-    suspend fun getJsonText(): String
+    suspend fun getCountries(): List<Country>
 
     suspend fun getCitiesByCountryId(countryId: Long): List<City>
 
