@@ -5,7 +5,8 @@ import com.sergeyrodin.citiestask.data.source.local.City
 import com.sergeyrodin.citiestask.data.source.local.Country
 
 interface CitiesRepository {
-    val status: LiveData<String>
+    val loading: LiveData<Boolean>
+    val error: LiveData<String>
 
     suspend fun getCountries(): List<Country>
 

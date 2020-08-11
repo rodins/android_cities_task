@@ -11,7 +11,7 @@ import retrofit2.Response
 
 class CountriesListViewModel(repository: CitiesRepository): ViewModel() {
 
-    val status = repository.status
+    val error = repository.error
 
     private val _countries = MutableLiveData<List<Country>>()
     val countries: LiveData<List<Country>>

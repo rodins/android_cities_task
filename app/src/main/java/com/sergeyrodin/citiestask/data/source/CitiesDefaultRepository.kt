@@ -1,7 +1,5 @@
 package com.sergeyrodin.citiestask.data.source
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.sergeyrodin.citiestask.data.source.local.City
 import com.sergeyrodin.citiestask.data.source.local.Country
 import com.sergeyrodin.citiestask.data.source.local.ICitiesLocalDataSource
@@ -10,7 +8,8 @@ import com.sergeyrodin.citiestask.data.source.remote.ICitiesRemoteDataSource
 class CitiesDefaultRepository(private val remoteDataSource: ICitiesRemoteDataSource,
                               private val localDataSource: ICitiesLocalDataSource
 ) : CitiesRepository {
-    override val status = remoteDataSource.status
+    override val loading = remoteDataSource.loading
+    override val error = remoteDataSource.error
 
     override suspend fun getCountries(): List<Country> {
         val countries = localDataSource.getCountries()
