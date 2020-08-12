@@ -8,7 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.sergeyrodin.citiestask.CitiesTaskApplication
 import com.sergeyrodin.citiestask.R
-import com.sergeyrodin.citiestask.databinding.FragmentCountriesLIstBinding
+import com.sergeyrodin.citiestask.databinding.FragmentCountriesListBinding
+import kotlinx.android.synthetic.main.fragment_countries_list.view.*
 
 class CountriesListFragment : Fragment() {
 
@@ -21,9 +22,10 @@ class CountriesListFragment : Fragment() {
                 (requireContext().applicationContext as CitiesTaskApplication).citiesRepository
             )
         }
-        val binding = FragmentCountriesLIstBinding.inflate(inflater)
+        val binding = FragmentCountriesListBinding.inflate(inflater)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+        binding.countriesList.adapter = CountriesListAdapter()
 
         return binding.root
     }
