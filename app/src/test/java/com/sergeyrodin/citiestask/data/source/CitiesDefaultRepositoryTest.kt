@@ -5,9 +5,7 @@ import com.sergeyrodin.citiestask.data.source.CitiesDefaultRepository
 import com.sergeyrodin.citiestask.data.source.local.City
 import com.sergeyrodin.citiestask.data.source.local.Country
 import com.sergeyrodin.citiestask.data.source.local.FakeLocalDataSource
-import com.sergeyrodin.citiestask.data.source.remote.CountryRemote
 import com.sergeyrodin.citiestask.data.source.remote.FakeRemoteDataSource
-import com.sergeyrodin.citiestask.data.source.remote.ICitiesRemoteDataSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers.`is`
@@ -21,10 +19,11 @@ class CitiesDefaultRepositoryTest{
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private val remoteCountry1 = CountryRemote("Country4", listOf("City10", "City11", "City12"))
-    private val remoteCountry2 = CountryRemote("Country5", listOf("City13", "City14", "City15", "City19"))
-    private val remoteCountry3 = CountryRemote("Country6", listOf("City16", "City17", "City18"))
-    private val remoteCountries = mutableListOf(remoteCountry1, remoteCountry2, remoteCountry3)
+    private val remoteCountriesMap = mapOf(
+        "Country4" to listOf("City10", "City11", "City12"),
+        "Country5" to listOf("City13", "City14", "City15", "City19"),
+        "Country6" to listOf("City16", "City17", "City18")
+    )
 
     private val country1 = Country(1, "Country1")
     private val country2 = Country(2, "Country2")
@@ -48,7 +47,7 @@ class CitiesDefaultRepositoryTest{
 
     @Before
     fun initDataSource() {
-        remoteDataSource = FakeRemoteDataSource(remoteCountries)
+        remoteDataSource = FakeRemoteDataSource(remoteCountriesMap)
         localDataSource = FakeLocalDataSource(countries, cities)
         subject = CitiesDefaultRepository(
             remoteDataSource,
@@ -57,8 +56,8 @@ class CitiesDefaultRepositoryTest{
     }
 
     @Test
-    fun getCountries_sizeEquals() {
-        val countriesLoaded = subject.getCountries().getOrAwaitValue()
+    fun getCountries_sizeEquals() = runBlockingTest{
+        val countriesLoaded = subject.getCountries()
         assertThat(countriesLoaded.size, `is`(countries.size))
     }
 
@@ -72,7 +71,7 @@ class CitiesDefaultRepositoryTest{
     fun getRemoteCountries_countriesSizeEquals() = runBlockingTest{
         subject.loadCountriesAndCitiesToDb()
 
-        val countriesLoaded = subject.getCountries().getOrAwaitValue()
+        val countriesLoaded = subject.getCountries()
         assertThat(countriesLoaded.size, `is`(6))
     }
 
@@ -80,7 +79,7 @@ class CitiesDefaultRepositoryTest{
     fun getRemoteCountries_citiesSizeEquals() = runBlockingTest {
         subject.loadCountriesAndCitiesToDb()
 
-        val countriesLoaded = subject.getCountries().getOrAwaitValue()
+        val countriesLoaded = subject.getCountries()
         val country5 = countriesLoaded.find {
             it.name == "Country5"
         }
