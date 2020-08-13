@@ -4,12 +4,14 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.sergeyrodin.citiestask.data.source.CitiesRepository
+import com.sergeyrodin.citiestask.data.source.local.City
 import com.sergeyrodin.citiestask.data.source.local.Country
 import com.sergeyrodin.citiestask.util.DataBindingIdlingResource
 import com.sergeyrodin.citiestask.util.EspressoIdlingResource
@@ -50,13 +52,17 @@ class MainActivityTest {
     }
 
     @Test
-    fun countryNameDisplayed() = runBlocking {
+    fun countryInput_countryClick_cityNameDisplayed() = runBlocking {
         val country = Country(1, "Country")
+        val city = City(1, "City", country.id)
         repository.insertCountry(country)
+        repository.insertCity(city)
         val activityScenario = ActivityScenario.launch(MainActivity::class.java)
         dataBindingIdlingResource.monitorActivity(activityScenario)
 
-        onView(withText(country.name)).check(matches(isDisplayed()))
+        onView(withText(country.name)).perform(click())
+
+        onView(withText(city.name)).check(matches(isDisplayed()))
 
         activityScenario.close()
     }
