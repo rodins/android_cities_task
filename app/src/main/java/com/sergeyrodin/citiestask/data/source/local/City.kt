@@ -13,7 +13,7 @@ foreignKeys = arrayOf(ForeignKey(
     childColumns = arrayOf("country_id"),
     onDelete = CASCADE
 )))
-class City (
+data class City (
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
     var name: String,

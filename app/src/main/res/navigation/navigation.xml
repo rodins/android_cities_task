@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation.xml"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation.xml"
     app:startDestination="@id/countriesLIstFragment">
 
     <fragment
         android:id="@+id/countriesLIstFragment"
         android:name="com.sergeyrodin.citiestask.countries.CountriesListFragment"
-        android:label="CountriesLIstFragment" />
+        android:label="CountriesLIstFragment" >
+        <action
+            android:id="@+id/action_countriesLIstFragment_to_citiesListFragment"
+            app:destination="@id/citiesListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/citiesListFragment"
+        android:name="com.sergeyrodin.citiestask.cities.CitiesListFragment"
+        android:label="fragment_cities_list"
+        tools:layout="@layout/fragment_cities_list" >
+        <argument
+            android:name="countryId"
+            app:argType="long" />
+    </fragment>
 </navigation>
