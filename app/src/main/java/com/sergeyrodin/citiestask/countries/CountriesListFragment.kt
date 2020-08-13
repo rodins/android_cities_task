@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.sergeyrodin.citiestask.CitiesTaskApplication
 import com.sergeyrodin.citiestask.R
 import com.sergeyrodin.citiestask.databinding.FragmentCountriesListBinding
@@ -25,7 +26,11 @@ class CountriesListFragment : Fragment() {
         val binding = FragmentCountriesListBinding.inflate(inflater)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-        binding.countriesList.adapter = CountriesListAdapter()
+        binding.countriesList.adapter = CountriesListAdapter(CountriesClickListener({
+            findNavController().navigate(
+                CountriesListFragmentDirections.actionCountriesLIstFragmentToCitiesListFragment(it)
+            )
+        }))
 
         return binding.root
     }

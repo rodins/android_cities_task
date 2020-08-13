@@ -8,19 +8,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sergeyrodin.citiestask.data.source.local.Country
 import com.sergeyrodin.citiestask.databinding.CountryListItemBinding
 
-class CountriesListAdapter: ListAdapter<Country, CountriesListAdapter.ViewHolder>(CountriesDiffCallback()) {
+class CountriesListAdapter(private val clickListener: CountriesClickListener): ListAdapter<Country, CountriesListAdapter.ViewHolder>(CountriesDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), clickListener)
     }
 
     class ViewHolder private constructor (private val binding: CountryListItemBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(country: Country) {
+        fun bind(country: Country, listener: CountriesClickListener) {
             binding.country = country
+            binding.clickListener = listener
             binding.executePendingBindings()
         }
 
@@ -44,4 +45,8 @@ class CountriesDiffCallback: DiffUtil.ItemCallback<Country>(){
         return oldItem == newItem
     }
 
+}
+
+class CountriesClickListener(private val clickListener: (id: Long) -> Unit) {
+    fun onClick(id: Long) = clickListener(id)
 }
