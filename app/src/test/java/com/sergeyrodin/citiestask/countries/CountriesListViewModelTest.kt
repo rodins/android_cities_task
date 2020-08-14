@@ -65,15 +65,26 @@ class CountriesListViewModelTest{
     }
 
     @Test
-    fun refreshCountries_sizeEquals() {
-        val countryToDelete = Country(1, "Country to delete")
-        repository.addCountries(countryToDelete)
+    fun countriesEmpty_loadFromNet_nameEquals() {
         val json = mapOf("Country" to listOf("City1", "City2", "City3"))
         repository.addJsonMap(json)
 
-        subject.refresh()
+        subject.start()
 
         val loaded = subject.countries.getOrAwaitValue()
         assertThat(loaded[0].name, `is`("Country"))
+    }
+
+    @Test
+    fun countriesNotEmpty_nameFromDbEquals() {
+        val country = Country(1, "Country from db")
+        repository.addCountries(country)
+        val json = mapOf("Country from net" to listOf("City1", "City2", "City3"))
+        repository.addJsonMap(json)
+
+        subject.start()
+
+        val loaded = subject.countries.getOrAwaitValue()
+        assertThat(loaded[0].name, `is`(country.name))
     }
 }

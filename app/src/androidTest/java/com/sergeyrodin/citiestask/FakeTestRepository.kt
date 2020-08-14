@@ -11,6 +11,8 @@ class FakeTestRepository: CitiesRepository {
     private val countries = mutableListOf<Country>()
     private val cities = mutableListOf<City>()
 
+    private lateinit var json: Map<String, List<String>>
+
     private val _error = MutableLiveData<String>()
     override val error: LiveData<String>
         get() = _error
@@ -42,6 +44,10 @@ class FakeTestRepository: CitiesRepository {
         }
     }
 
+    fun addJsonMap(json: Map<String, List<String>>) {
+        this.json = json
+    }
+
     override fun getCountries(): LiveData<List<Country>> {
         return countriesLiveData
     }
@@ -65,7 +71,17 @@ class FakeTestRepository: CitiesRepository {
     }
 
     override suspend fun loadCountriesAndCitiesToDb() {
-        TODO("Not yet implemented")
+        var countryId = countries.size.toLong()
+        var cityId = cities.size
+        json.keys.forEach {
+            val country = Country(++countryId, it)
+            countries.add(country)
+            json[it]?.forEach {
+                val city = City(++cityId, it, country.id)
+                cities.add(city)
+            }
+        }
+        countriesLiveData.value = countries
     }
 
     override suspend fun deleteAllCountries() {

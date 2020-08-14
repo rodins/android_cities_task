@@ -15,10 +15,11 @@ class CountriesListViewModel(private val repository: CitiesRepository): ViewMode
     val error = repository.error
     val countries = repository.getCountries()
 
-    fun refresh() {
-        viewModelScope.launch {
-            repository.deleteAllCountries()
-            repository.loadCountriesAndCitiesToDb()
+    fun start() {
+        if(countries.value?.isEmpty() != false) {
+            viewModelScope.launch {
+                repository.loadCountriesAndCitiesToDb()
+            }
         }
     }
 }

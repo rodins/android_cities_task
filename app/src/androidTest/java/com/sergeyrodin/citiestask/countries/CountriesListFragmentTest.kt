@@ -85,4 +85,13 @@ class CountriesListFragmentTest {
 
         onView(withText("Error")).check(matches(isDisplayed()))
     }
+
+    @Test
+    fun countriesEmpty_loadFromNet_nameDisplayed() {
+        val json = mapOf("Country" to listOf("City1", "City2", "City3"))
+        repository.addJsonMap(json)
+        launchFragmentInContainer<CountriesListFragment>(null, R.style.AppTheme)
+
+        onView(withText("Country")).check(matches(isDisplayed()))
+    }
 }
