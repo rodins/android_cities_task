@@ -9,12 +9,17 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CountriesListViewModel(repository: CitiesRepository): ViewModel() {
+class CountriesListViewModel(private val repository: CitiesRepository): ViewModel() {
 
     val loading = repository.loading
     val error = repository.error
     val countries = repository.getCountries()
 
+    fun refresh() {
+        viewModelScope.launch {
+            repository.loadCountriesAndCitiesToDb()
+        }
+    }
 }
 
 class CountriesListViewModelFactory(private val repository: CitiesRepository): ViewModelProvider.Factory {

@@ -63,4 +63,15 @@ class CountriesListViewModelTest{
         val loaded = subject.error.getOrAwaitValue()
         assertThat(loaded, `is`("Error"))
     }
+
+    @Test
+    fun refreshCountries_sizeEquals() {
+        val json = mapOf("Country" to listOf("City1", "City2", "City3"))
+        repository.addJsonMap(json)
+
+        subject.refresh()
+
+        val loaded = subject.countries.getOrAwaitValue()
+        assertThat(loaded[0].name, `is`("Country"))
+    }
 }
