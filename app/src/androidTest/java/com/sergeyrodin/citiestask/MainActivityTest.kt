@@ -47,7 +47,6 @@ class MainActivityTest {
         runBlocking {
             repository.deleteAllCountries()
         }
-
     }
 
     @After
