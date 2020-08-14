@@ -87,4 +87,18 @@ class CountriesListViewModelTest{
         val loaded = subject.countries.getOrAwaitValue()
         assertThat(loaded[0].name, `is`(country.name))
     }
+
+    @Test
+    fun refreshCountries_nameEquals() {
+        val country = Country(1, "Country from db")
+        repository.addCountries(country)
+        val json = mapOf("Country from net" to listOf("City1", "City2", "City3"))
+        repository.addJsonMap(json)
+
+        subject.start()
+        subject.refresh()
+
+        val loaded = subject.countries.getOrAwaitValue()
+        assertThat(loaded[0].name, `is`("Country from net"))
+    }
 }

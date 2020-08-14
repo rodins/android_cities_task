@@ -22,6 +22,13 @@ class CountriesListViewModel(private val repository: CitiesRepository): ViewMode
             }
         }
     }
+
+    fun refresh() {
+        viewModelScope.launch {
+            repository.deleteAllCountries()
+            repository.loadCountriesAndCitiesToDb()
+        }
+    }
 }
 
 class CountriesListViewModelFactory(private val repository: CitiesRepository): ViewModelProvider.Factory {
