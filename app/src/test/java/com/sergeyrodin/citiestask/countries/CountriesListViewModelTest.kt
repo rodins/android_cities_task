@@ -66,6 +66,8 @@ class CountriesListViewModelTest{
 
     @Test
     fun refreshCountries_sizeEquals() {
+        val countryToDelete = Country(1, "Country to delete")
+        repository.addCountries(countryToDelete)
         val json = mapOf("Country" to listOf("City1", "City2", "City3"))
         repository.addJsonMap(json)
 

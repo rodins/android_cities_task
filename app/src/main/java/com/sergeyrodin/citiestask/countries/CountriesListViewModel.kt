@@ -17,6 +17,7 @@ class CountriesListViewModel(private val repository: CitiesRepository): ViewMode
 
     fun refresh() {
         viewModelScope.launch {
+            repository.deleteAllCountries()
             repository.loadCountriesAndCitiesToDb()
         }
     }
