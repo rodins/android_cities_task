@@ -86,4 +86,28 @@ class CitiesDefaultRepositoryTest{
         val citiesLoaded = subject.getCitiesByCountryId(country5?.id?:-1L)
         assertThat(citiesLoaded.size, `is`(4))
     }
+
+    @Test
+    fun loadingMode_loadingTrue() {
+        remoteDataSource.setLoading()
+
+        val loading = subject.loading.getOrAwaitValue()
+        assertThat(loading, `is`(true))
+    }
+
+    @Test
+    fun errorMode_loadingFalse() {
+        remoteDataSource.setError()
+
+        val loading = subject.loading.getOrAwaitValue()
+        assertThat(loading, `is`(false))
+    }
+
+    @Test
+    fun errorMode_errorEquals() {
+        remoteDataSource.setError()
+
+        val error = subject.error.getOrAwaitValue()
+        assertThat(error, `is`("Error"))
+    }
 }

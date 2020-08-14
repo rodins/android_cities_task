@@ -13,8 +13,6 @@ class FakeRemoteDataSource(private var countries: Map<String, List<String>> = mu
         get() = _loading
 
     override suspend fun getCountries(): Map<String, List<String>> {
-        _loading.value = false
-        _error.value = ""
         return countries
     }
 
