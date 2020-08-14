@@ -1,5 +1,6 @@
 package com.sergeyrodin.citiestask.data.source
 
+import androidx.lifecycle.LiveData
 import com.sergeyrodin.citiestask.data.source.local.City
 import com.sergeyrodin.citiestask.data.source.local.Country
 import com.sergeyrodin.citiestask.data.source.local.ICitiesLocalDataSource
@@ -12,14 +13,9 @@ class CitiesDefaultRepository(private val remoteDataSource: ICitiesRemoteDataSou
     override val loading = remoteDataSource.loading
     override val error = remoteDataSource.error
 
-    override suspend fun getCountries(): List<Country> {
+    override fun getCountries(): LiveData<List<Country>> {
         wrapEspressoIdlingResource {
-            val countries = localDataSource.getCountries()
-            if(countries.isEmpty()) {
-                loadCountriesAndCitiesToDb()
-                return localDataSource.getCountries()
-            }
-            return countries
+            return localDataSource.getCountries()
         }
     }
 

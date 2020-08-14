@@ -13,16 +13,7 @@ class CountriesListViewModel(repository: CitiesRepository): ViewModel() {
 
     val loading = repository.loading
     val error = repository.error
-
-    private val _countries = MutableLiveData<List<Country>>()
-    val countries: LiveData<List<Country>>
-        get() = _countries
-
-    init{
-        viewModelScope.launch {
-            _countries.value = repository.getCountries()
-        }
-    }
+    val countries = repository.getCountries()
 
 }
 

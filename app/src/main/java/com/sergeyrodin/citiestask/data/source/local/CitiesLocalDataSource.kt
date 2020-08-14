@@ -13,8 +13,8 @@ class CitiesLocalDataSource(private val databaseDao: CitiesDatabaseDao,
         return@withContext databaseDao.insertCountry(country)
     }
 
-    override suspend fun getCountries(): List<Country> = withContext(dispatcher){
-        return@withContext databaseDao.getCountries()
+    override fun getCountries(): LiveData<List<Country>>{
+        return databaseDao.getCountries()
     }
 
     override suspend fun insertCity(city: City) = withContext(dispatcher) {

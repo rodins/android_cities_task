@@ -8,7 +8,7 @@ interface CitiesRepository {
     val loading: LiveData<Boolean>
     val error: LiveData<String>
 
-    suspend fun getCountries(): List<Country>
+    fun getCountries(): LiveData<List<Country>>
 
     suspend fun insertCountry(country: Country): Long
 

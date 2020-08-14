@@ -7,6 +7,7 @@ import com.sergeyrodin.citiestask.data.source.local.City
 import com.sergeyrodin.citiestask.data.source.local.Country
 
 class FakeTestRepository: CitiesRepository {
+    private val countriesLiveData = MutableLiveData<List<Country>>()
     private val countries = mutableListOf<Country>()
     private val cities = mutableListOf<City>()
 
@@ -32,6 +33,7 @@ class FakeTestRepository: CitiesRepository {
         country.forEach {
             countries.add(it)
         }
+        countriesLiveData.value = countries
     }
 
     fun addCities(vararg city: City) {
@@ -40,8 +42,8 @@ class FakeTestRepository: CitiesRepository {
         }
     }
 
-    override suspend fun getCountries(): List<Country> {
-        return countries
+    override fun getCountries(): LiveData<List<Country>> {
+        return countriesLiveData
     }
 
     override suspend fun getCitiesByCountryId(countryId: Long): List<City> {
@@ -58,6 +60,7 @@ class FakeTestRepository: CitiesRepository {
 
     override suspend fun insertCountry(country: Country): Long {
         countries.add(country)
+        countriesLiveData.value = countries
         return country.id
     }
 
