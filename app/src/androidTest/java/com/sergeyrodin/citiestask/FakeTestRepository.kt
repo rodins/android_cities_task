@@ -41,8 +41,6 @@ class FakeTestRepository: CitiesRepository {
     }
 
     override suspend fun getCountries(): List<Country> {
-        _loading.value = false
-        _error.value = ""
         return countries
     }
 

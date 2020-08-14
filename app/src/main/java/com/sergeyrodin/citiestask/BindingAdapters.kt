@@ -1,5 +1,6 @@
 package com.sergeyrodin.citiestask
 
+import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.sergeyrodin.citiestask.cities.CitiesListAdapter
@@ -17,4 +18,9 @@ fun bindCountryRecyclerView(view: RecyclerView, list: List<Country>?) {
 fun bindCityRecyclerView(view: RecyclerView, list: List<City>?) {
     val adapter = view.adapter as CitiesListAdapter
     adapter.submitList(list)
+}
+
+@BindingAdapter("viewVisible")
+fun bindViewBooleanVisible(view: View, visible: Boolean) {
+    view.visibility = if(visible) View.VISIBLE else View.INVISIBLE
 }

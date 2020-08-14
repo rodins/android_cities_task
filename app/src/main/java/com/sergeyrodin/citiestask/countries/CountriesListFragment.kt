@@ -26,11 +26,11 @@ class CountriesListFragment : Fragment() {
         val binding = FragmentCountriesListBinding.inflate(inflater)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-        binding.countriesList.adapter = CountriesListAdapter(CountriesClickListener({
+        binding.countriesList.adapter = CountriesListAdapter(CountriesClickListener {
             findNavController().navigate(
                 CountriesListFragmentDirections.actionCountriesLIstFragmentToCitiesListFragment(it)
             )
-        }))
+        })
 
         return binding.root
     }

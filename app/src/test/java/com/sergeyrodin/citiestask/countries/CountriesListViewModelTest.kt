@@ -49,6 +49,14 @@ class CountriesListViewModelTest{
     }
 
     @Test
+    fun errorMode_loadingFalse() {
+        repository.errorMode()
+
+        val loaded = subject.loading.getOrAwaitValue()
+        assertThat(loaded, `is`(false))
+    }
+
+    @Test
     fun errorMode_errorEquals() {
         repository.errorMode()
 
