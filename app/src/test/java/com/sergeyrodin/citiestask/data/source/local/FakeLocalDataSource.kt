@@ -32,4 +32,9 @@ class FakeLocalDataSource(private val countries: MutableList<Country> = mutableL
     override suspend fun insertCity(city: City) {
         cities.add(city)
     }
+
+    fun clearCountries() {
+        countries.clear()
+        cities.clear()
+    }
 }

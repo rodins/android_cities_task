@@ -88,6 +88,14 @@ class CitiesDefaultRepositoryTest{
     }
 
     @Test
+    fun countriesEmpty_getRemoteCountries_countriesSizeEquals() = runBlockingTest{
+        localDataSource.clearCountries()
+
+        val loaded = subject.getCountries()
+        assertThat(loaded.size, `is`(3))
+    }
+
+    @Test
     fun loadingMode_loadingTrue() {
         remoteDataSource.setLoading()
 

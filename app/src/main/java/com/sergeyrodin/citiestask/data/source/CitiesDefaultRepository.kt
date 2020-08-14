@@ -16,7 +16,8 @@ class CitiesDefaultRepository(private val remoteDataSource: ICitiesRemoteDataSou
         wrapEspressoIdlingResource {
             val countries = localDataSource.getCountries()
             if(countries.isEmpty()) {
-                remoteDataSource.getCountries()
+                loadCountriesAndCitiesToDb()
+                return localDataSource.getCountries()
             }
             return countries
         }
