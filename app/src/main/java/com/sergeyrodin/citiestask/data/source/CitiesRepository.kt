@@ -17,4 +17,6 @@ interface CitiesRepository {
     suspend fun getCitiesByCountryId(countryId: Long): List<City>
 
     suspend fun loadCountriesAndCitiesToDb()
+
+    suspend fun deleteAllCountries()
 }

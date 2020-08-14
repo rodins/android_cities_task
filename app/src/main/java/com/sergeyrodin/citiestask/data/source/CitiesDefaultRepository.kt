@@ -37,6 +37,12 @@ class CitiesDefaultRepository(private val remoteDataSource: ICitiesRemoteDataSou
         }
     }
 
+    override suspend fun deleteAllCountries() {
+        wrapEspressoIdlingResource {
+            localDataSource.deleteAllCountries()
+        }
+    }
+
     override suspend fun loadCountriesAndCitiesToDb() {
         wrapEspressoIdlingResource {
             val countries = remoteDataSource.getCountries()

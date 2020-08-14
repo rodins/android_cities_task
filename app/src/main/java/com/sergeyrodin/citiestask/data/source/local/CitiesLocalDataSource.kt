@@ -24,4 +24,9 @@ class CitiesLocalDataSource(private val databaseDao: CitiesDatabaseDao,
     override suspend fun getCitiesByCountryId(countryId: Long): List<City> = withContext(dispatcher) {
         return@withContext databaseDao.getCitiesByCountryId(countryId)
     }
+
+    override suspend fun deleteAllCountries() = withContext(dispatcher){
+        databaseDao.deleteAllCities()
+        databaseDao.deleteAllCountries()
+    }
 }

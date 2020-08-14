@@ -44,6 +44,10 @@ class MainActivityTest {
     @Before
     fun init() {
         repository = ServiceLocator.provideCitiesRepository(getApplicationContext())
+        runBlocking {
+            repository.deleteAllCountries()
+        }
+
     }
 
     @After

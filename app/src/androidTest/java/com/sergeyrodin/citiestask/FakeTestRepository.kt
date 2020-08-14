@@ -67,4 +67,9 @@ class FakeTestRepository: CitiesRepository {
     override suspend fun loadCountriesAndCitiesToDb() {
         TODO("Not yet implemented")
     }
+
+    override suspend fun deleteAllCountries() {
+        countries.clear()
+        cities.clear()
+    }
 }

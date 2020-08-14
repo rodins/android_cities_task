@@ -60,4 +60,14 @@ class CitiesDatabaseDaoTest {
         val cities = citiesDatabase.citiesDatabaseDao.getCitiesByCountryId(country.id)
         assertThat(cities[0].name, `is`(city.name))
     }
+
+    @Test
+    fun deleteCountries_sizeZero() {
+        val country = Country(1, "Country")
+        citiesDatabase.citiesDatabaseDao.insertCountry(country)
+        citiesDatabase.citiesDatabaseDao.deleteAllCountries()
+
+        val countries = citiesDatabase.citiesDatabaseDao.getCountries().getOrAwaitValue()
+        assertThat(countries.size, `is`(0))
+    }
 }

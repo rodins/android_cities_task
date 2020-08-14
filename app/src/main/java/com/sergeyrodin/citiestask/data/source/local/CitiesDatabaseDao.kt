@@ -18,4 +18,10 @@ interface CitiesDatabaseDao {
 
     @Query("SELECT * FROM cities WHERE country_id = :countryId")
     fun getCitiesByCountryId(countryId: Long): List<City>
+
+    @Query("DELETE FROM countries")
+    fun deleteAllCountries()
+
+    @Query("DELETE FROM cities")
+    fun deleteAllCities()
 }

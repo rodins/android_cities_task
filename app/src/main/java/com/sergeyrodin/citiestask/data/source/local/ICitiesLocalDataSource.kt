@@ -12,4 +12,6 @@ interface ICitiesLocalDataSource {
     suspend fun insertCity(city: City)
 
     suspend fun getCitiesByCountryId(countryId: Long): List<City>
+
+    suspend fun deleteAllCountries()
 }
