@@ -1,10 +1,8 @@
 package com.sergeyrodin.citiestask.countries
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -15,15 +13,17 @@ import kotlinx.android.synthetic.main.fragment_countries_list.view.*
 
 class CountriesListFragment : Fragment() {
 
+    private val viewModel by viewModels<CountriesListViewModel> {
+        CountriesListViewModelFactory(
+            (requireContext().applicationContext as CitiesTaskApplication).citiesRepository
+        )
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val viewModel by viewModels<CountriesListViewModel> {
-            CountriesListViewModelFactory(
-                (requireContext().applicationContext as CitiesTaskApplication).citiesRepository
-            )
-        }
+
         val binding = FragmentCountriesListBinding.inflate(inflater)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -32,9 +32,28 @@ class CountriesListFragment : Fragment() {
                 CountriesListFragmentDirections.actionCountriesLIstFragmentToCitiesListFragment(it)
             )
         })
-        viewModel.start()
+
+        viewModel.countries.observe(viewLifecycleOwner, Observer{
+            if(it.isEmpty()) {
+                viewModel.loadCountries()
+            }
+        })
+
+        setHasOptionsMenu(true)
 
         return binding.root
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.countries_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.action_refresh) {
+            viewModel.refresh()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }

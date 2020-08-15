@@ -6,8 +6,7 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.sergeyrodin.citiestask.data.source.CitiesRepository
@@ -17,6 +16,7 @@ import com.sergeyrodin.citiestask.util.DataBindingIdlingResource
 import com.sergeyrodin.citiestask.util.EspressoIdlingResource
 import com.sergeyrodin.citiestask.util.monitorActivity
 import kotlinx.coroutines.runBlocking
+import org.hamcrest.CoreMatchers.not
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -69,4 +69,5 @@ class MainActivityTest {
 
         activityScenario.close()
     }
+
 }

@@ -1,9 +1,13 @@
 package com.sergeyrodin.citiestask.countries
 
+import android.content.Context
+import androidx.appcompat.view.menu.ActionMenuItem
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -88,10 +92,33 @@ class CountriesListFragmentTest {
 
     @Test
     fun countriesEmpty_loadFromNet_nameDisplayed() {
+        repository.addCountries()
         val json = mapOf("Country" to listOf("City1", "City2", "City3"))
         repository.addJsonMap(json)
         launchFragmentInContainer<CountriesListFragment>(null, R.style.AppTheme)
 
         onView(withText("Country")).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun refreshCountries_nameDisplayed() {
+        val country = Country(1, "Country from db")
+        repository.addCountries()
+        val json = mapOf("Country from net" to listOf("City1", "City2", "City3"))
+        repository.addJsonMap(json)
+        val scenario = launchFragmentInContainer<CountriesListFragment>(null, R.style.AppTheme)
+
+        clickRefreshAction(scenario)
+
+        onView(withText("Country from net")).check(matches(isDisplayed()))
+    }
+
+    private fun clickRefreshAction(scenario: FragmentScenario<CountriesListFragment>) {
+        // Create dummy menu item with the desired item id
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val editMenuItem = ActionMenuItem(context, 0, R.id.action_refresh, 0, 0, null)
+        scenario.onFragment{
+            it.onOptionsItemSelected(editMenuItem)
+        }
     }
 }

@@ -9,17 +9,23 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CountriesListViewModel(private val repository: CitiesRepository): ViewModel() {
+class CountriesListViewModel(private val repository: CitiesRepository) : ViewModel() {
 
     val loading = repository.loading
     val error = repository.error
     val countries = repository.getCountries()
 
     fun start() {
-        if(countries.value?.isEmpty() != false) {
-            viewModelScope.launch {
+        viewModelScope.launch {
+            if (countries.value?.isEmpty() != false) {
                 repository.loadCountriesAndCitiesToDb()
             }
+        }
+    }
+
+    fun loadCountries() {
+        viewModelScope.launch {
+            repository.loadCountriesAndCitiesToDb()
         }
     }
 
@@ -31,7 +37,8 @@ class CountriesListViewModel(private val repository: CitiesRepository): ViewMode
     }
 }
 
-class CountriesListViewModelFactory(private val repository: CitiesRepository): ViewModelProvider.Factory {
+class CountriesListViewModelFactory(private val repository: CitiesRepository) :
+    ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return CountriesListViewModel(repository) as T
