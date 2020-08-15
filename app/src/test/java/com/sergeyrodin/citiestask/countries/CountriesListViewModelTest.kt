@@ -69,7 +69,7 @@ class CountriesListViewModelTest{
         val json = mapOf("Country" to listOf("City1", "City2", "City3"))
         repository.addJsonMap(json)
 
-        subject.start()
+        subject.loadCountries()
 
         val loaded = subject.countries.getOrAwaitValue()
         assertThat(loaded[0].name, `is`("Country"))
@@ -82,8 +82,6 @@ class CountriesListViewModelTest{
         val json = mapOf("Country from net" to listOf("City1", "City2", "City3"))
         repository.addJsonMap(json)
 
-        subject.start()
-
         val loaded = subject.countries.getOrAwaitValue()
         assertThat(loaded[0].name, `is`(country.name))
     }
@@ -95,7 +93,6 @@ class CountriesListViewModelTest{
         val json = mapOf("Country from net" to listOf("City1", "City2", "City3"))
         repository.addJsonMap(json)
 
-        subject.start()
         subject.refresh()
 
         val loaded = subject.countries.getOrAwaitValue()

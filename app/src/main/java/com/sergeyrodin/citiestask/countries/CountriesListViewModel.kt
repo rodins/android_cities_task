@@ -15,14 +15,6 @@ class CountriesListViewModel(private val repository: CitiesRepository) : ViewMod
     val error = repository.error
     val countries = repository.getCountries()
 
-    fun start() {
-        viewModelScope.launch {
-            if (countries.value?.isEmpty() != false) {
-                repository.loadCountriesAndCitiesToDb()
-            }
-        }
-    }
-
     fun loadCountries() {
         viewModelScope.launch {
             repository.loadCountriesAndCitiesToDb()
