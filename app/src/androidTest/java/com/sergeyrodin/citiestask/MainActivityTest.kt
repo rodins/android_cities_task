@@ -70,4 +70,21 @@ class MainActivityTest {
         activityScenario.close()
     }
 
+    @Test
+    fun countryClicked_titleEquals() = runBlocking {
+        val country = Country(1, "Country")
+        val city = City(1, "City", country.id)
+        repository.insertCountry(country)
+        repository.insertCity(city)
+        val activityScenario = ActivityScenario.launch(MainActivity::class.java)
+        dataBindingIdlingResource.monitorActivity(activityScenario)
+
+        onView(withText(country.name)).perform(click())
+
+        onView(withText(city.name)).check(matches(isDisplayed()))
+        onView(withText(country.name)).check(matches(isDisplayed()))
+
+        activityScenario.close()
+    }
+
 }

@@ -47,6 +47,6 @@ class CountriesDiffCallback: DiffUtil.ItemCallback<Country>(){
 
 }
 
-class CountriesClickListener(private val clickListener: (id: Long) -> Unit) {
-    fun onClick(id: Long) = clickListener(id)
+class CountriesClickListener(private val clickListener: (id: Long, name: String) -> Unit) {
+    fun onClick(id: Long, name: String) = clickListener(id, name)
 }

@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:onClick="@{() -> clickListener.onClick(country.id)}"
+        android:onClick="@{() -> clickListener.onClick(country.id, country.name)}"
         android:layout_marginBottom="8dp">
 
         <TextView

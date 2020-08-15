@@ -39,7 +39,7 @@ class CitiesListFragmentTest {
         val city = City(1, "City", country.id)
         repository.addCountries(country)
         repository.addCities(city)
-        val bundle = CitiesListFragmentArgs.Builder(country.id).build().toBundle()
+        val bundle = CitiesListFragmentArgs.Builder(country.id, country.name).build().toBundle()
         launchFragmentInContainer<CitiesListFragment>(bundle, R.style.AppTheme)
 
         onView(withText(city.name)).check(matches(isDisplayed()))

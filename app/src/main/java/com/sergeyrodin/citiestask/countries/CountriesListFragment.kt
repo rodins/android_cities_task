@@ -27,9 +27,9 @@ class CountriesListFragment : Fragment() {
         val binding = FragmentCountriesListBinding.inflate(inflater)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-        binding.countriesList.adapter = CountriesListAdapter(CountriesClickListener {
+        binding.countriesList.adapter = CountriesListAdapter(CountriesClickListener { id: Long, name: String ->
             findNavController().navigate(
-                CountriesListFragmentDirections.actionCountriesLIstFragmentToCitiesListFragment(it)
+                CountriesListFragmentDirections.actionCountriesLIstFragmentToCitiesListFragment(id, name)
             )
         })
 

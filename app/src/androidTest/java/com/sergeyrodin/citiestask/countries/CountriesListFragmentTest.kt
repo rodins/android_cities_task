@@ -68,7 +68,7 @@ class CountriesListFragmentTest {
         onView(withText(country.name)).perform(click())
 
         verify(navController).navigate(
-             CountriesListFragmentDirections.actionCountriesLIstFragmentToCitiesListFragment(country.id)
+             CountriesListFragmentDirections.actionCountriesLIstFragmentToCitiesListFragment(country.id, country.name)
         )
     }
 

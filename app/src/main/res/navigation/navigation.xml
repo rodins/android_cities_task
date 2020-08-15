@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/countriesLIstFragment"
         android:name="com.sergeyrodin.citiestask.countries.CountriesListFragment"
-        android:label="CountriesLIstFragment" >
+        android:label="@string/countries_title">
         <action
             android:id="@+id/action_countriesLIstFragment_to_citiesListFragment"
             app:destination="@id/citiesListFragment" />
@@ -16,10 +16,13 @@
     <fragment
         android:id="@+id/citiesListFragment"
         android:name="com.sergeyrodin.citiestask.cities.CitiesListFragment"
-        android:label="fragment_cities_list"
+        android:label="{title}"
         tools:layout="@layout/fragment_cities_list" >
         <argument
             android:name="countryId"
             app:argType="long" />
+        <argument
+            android:name="title"
+            app:argType="string" />
     </fragment>
 </navigation>
