@@ -47,11 +47,13 @@ class CitiesDefaultRepository(private val remoteDataSource: ICitiesRemoteDataSou
         wrapEspressoIdlingResource {
             val countries = remoteDataSource.getCountries()
             countries.keys.forEach { countryName ->
-                val country = Country(name = countryName)
-                val countryId = localDataSource.insertCountry(country)
-                countries[countryName]?.forEach { cityName ->
-                    val city = City(name = cityName, countryId = countryId)
-                    localDataSource.insertCity(city)
+                if(countryName.isNotEmpty()) {
+                    val country = Country(name = countryName)
+                    val countryId = localDataSource.insertCountry(country)
+                    countries[countryName]?.forEach { cityName ->
+                        val city = City(name = cityName, countryId = countryId)
+                        localDataSource.insertCity(city)
+                    }
                 }
             }
         }

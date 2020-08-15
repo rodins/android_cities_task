@@ -22,7 +22,8 @@ class CitiesDefaultRepositoryTest{
     private val remoteCountriesMap = mapOf(
         "Country4" to listOf("City10", "City11", "City12"),
         "Country5" to listOf("City13", "City14", "City15", "City19"),
-        "Country6" to listOf("City16", "City17", "City18")
+        "Country6" to listOf("City16", "City17", "City18"),
+        "" to listOf()
     )
 
     private val country1 = Country(1, "Country1")
