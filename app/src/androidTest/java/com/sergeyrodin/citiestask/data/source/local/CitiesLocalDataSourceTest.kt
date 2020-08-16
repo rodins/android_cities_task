@@ -52,7 +52,7 @@ class CitiesLocalDataSourceTest {
         subject.insertCountries(countries)
 
         val loaded = subject.getCountries().getOrAwaitValue()
-        assertThat(countries[0].name, `is`(country1.name))
+        assertThat(loaded[0].name, `is`(country1.name))
     }
 
     @Test

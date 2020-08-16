@@ -3,25 +3,18 @@ package com.sergeyrodin.citiestask.data.source.local
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
-class FakeLocalDataSource(private val countries: MutableList<Country> = mutableListOf(),
+class FakeLocalDataSource(private val countriesList: MutableList<Country> = mutableListOf(),
                           private val citiesList: MutableList<City> = mutableListOf()):
     ICitiesLocalDataSource {
-    private val countriesLiveData = MutableLiveData<List<Country>>(countries)
-    private var countryId = 0L
-
-    init {
-        countryId = countries.size.toLong()
-    }
+    private val countriesLiveData = MutableLiveData<List<Country>>(countriesList)
 
     override fun getCountries(): LiveData<List<Country>>{
         return countriesLiveData
     }
 
-    override suspend fun insertCountry(country: Country): Long {
-        country.id = ++countryId
-        countries.add(country)
-        countriesLiveData.value = countries
-        return countryId
+    override suspend fun insertCountries(countries: List<Country>) {
+        countriesList.addAll(countries)
+        countriesLiveData.value = countriesList
     }
 
     override suspend fun getCitiesByCountryId(countryId: Long): List<City> {
@@ -35,7 +28,7 @@ class FakeLocalDataSource(private val countries: MutableList<Country> = mutableL
     }
 
     override suspend fun deleteAllCountries() {
-        countries.clear()
+        countriesList.clear()
         citiesList.clear()
     }
 }

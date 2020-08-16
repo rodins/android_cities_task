@@ -79,6 +79,7 @@ class CitiesDefaultRepositoryTest{
 
     @Test
     fun getRemoteCountries_citiesSizeEquals() = runBlockingTest {
+        subject.deleteAllCountries()
         subject.loadCountriesAndCitiesToDb()
 
         val countriesLoaded = subject.getCountries().getOrAwaitValue()
