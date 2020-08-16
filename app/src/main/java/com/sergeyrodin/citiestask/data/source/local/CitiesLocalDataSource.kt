@@ -17,8 +17,8 @@ class CitiesLocalDataSource(private val databaseDao: CitiesDatabaseDao,
         return databaseDao.getCountries()
     }
 
-    override suspend fun insertCity(city: City) = withContext(dispatcher) {
-        databaseDao.insertCity(city)
+    override suspend fun insertCities(cities: List<City>) = withContext(dispatcher) {
+        databaseDao.insertCity(cities)
     }
 
     override suspend fun getCitiesByCountryId(countryId: Long): List<City> = withContext(dispatcher) {

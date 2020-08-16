@@ -58,15 +58,17 @@ class CitiesLocalDataSourceTest {
     fun insertAndGetCity() = runBlockingTest{
         val country =
             Country(1, "Country")
-        val city = City(
+        val city1 = City(
             1,
-            "City",
+            "City1",
             country.id
         )
+        val city2 = City(2, "City2", country.id)
+        val cities = listOf(city1, city2)
         subject.insertCountry(country)
-        subject.insertCity(city)
+        subject.insertCities(cities)
 
-        val cities = subject.getCitiesByCountryId(country.id)
-        assertThat(cities[0].name, `is`(city.name))
+        val loaded = subject.getCitiesByCountryId(country.id)
+        assertThat(loaded[0].name, `is`(cities[0].name))
     }
 }

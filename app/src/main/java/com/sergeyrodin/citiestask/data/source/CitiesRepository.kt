@@ -12,7 +12,7 @@ interface CitiesRepository {
 
     suspend fun insertCountry(country: Country): Long
 
-    suspend fun insertCity(city: City)
+    suspend fun insertCities(cities: List<City>)
 
     suspend fun getCitiesByCountryId(countryId: Long): List<City>
 

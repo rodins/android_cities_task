@@ -57,15 +57,17 @@ class MainActivityTest {
     @Test
     fun countryInput_countryClick_cityNameDisplayed() = runBlocking {
         val country = Country(1, "Country")
-        val city = City(1, "City", country.id)
+        val city1 = City(1, "City1", country.id)
+        val city2 = City(2, "City2", country.id)
+        val cities = listOf(city1, city2)
         repository.insertCountry(country)
-        repository.insertCity(city)
+        repository.insertCities(cities)
         val activityScenario = ActivityScenario.launch(MainActivity::class.java)
         dataBindingIdlingResource.monitorActivity(activityScenario)
 
         onView(withText(country.name)).perform(click())
 
-        onView(withText(city.name)).check(matches(isDisplayed()))
+        onView(withText(cities[0].name)).check(matches(isDisplayed()))
 
         activityScenario.close()
     }
@@ -73,15 +75,17 @@ class MainActivityTest {
     @Test
     fun countryClicked_titleEquals() = runBlocking {
         val country = Country(1, "Country")
-        val city = City(1, "City", country.id)
+        val city1 = City(1, "City1", country.id)
+        val city2 = City(2, "City2", country.id)
+        val cities = listOf(city1, city2)
         repository.insertCountry(country)
-        repository.insertCity(city)
+        repository.insertCities(cities)
         val activityScenario = ActivityScenario.launch(MainActivity::class.java)
         dataBindingIdlingResource.monitorActivity(activityScenario)
 
         onView(withText(country.name)).perform(click())
 
-        onView(withText(city.name)).check(matches(isDisplayed()))
+        onView(withText(cities[0].name)).check(matches(isDisplayed()))
         onView(withText(country.name)).check(matches(isDisplayed()))
 
         activityScenario.close()

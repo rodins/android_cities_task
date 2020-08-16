@@ -49,16 +49,18 @@ class CitiesDatabaseDaoTest {
     fun insertAndGetCity() {
         val country =
             Country(1, "Country")
-        val city = City(
+        val city1 = City(
             1,
-            "City",
+            "City1",
             country.id
         )
+        val city2 = City(2, "City2", country.id)
+        val cities = listOf(city1, city2)
         citiesDatabase.citiesDatabaseDao.insertCountry(country)
-        citiesDatabase.citiesDatabaseDao.insertCity(city)
+        citiesDatabase.citiesDatabaseDao.insertCity(cities)
 
-        val cities = citiesDatabase.citiesDatabaseDao.getCitiesByCountryId(country.id)
-        assertThat(cities[0].name, `is`(city.name))
+        val loaded = citiesDatabase.citiesDatabaseDao.getCitiesByCountryId(country.id)
+        assertThat(loaded[0].name, `is`(cities[0].name))
     }
 
     @Test
