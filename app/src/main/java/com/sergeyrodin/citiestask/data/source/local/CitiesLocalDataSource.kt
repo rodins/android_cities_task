@@ -9,8 +9,8 @@ class CitiesLocalDataSource(private val databaseDao: CitiesDatabaseDao,
                             private val dispatcher: CoroutineDispatcher = Dispatchers.IO ) :
     ICitiesLocalDataSource {
 
-    override suspend fun insertCountry(country: Country): Long = withContext(dispatcher){
-        return@withContext databaseDao.insertCountry(country)
+    override suspend fun insertCountries(countries: List<Country>) = withContext(dispatcher){
+        return@withContext databaseDao.insertCountries(countries)
     }
 
     override fun getCountries(): LiveData<List<Country>>{

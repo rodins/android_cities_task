@@ -25,9 +25,9 @@ class CitiesDefaultRepository(private val remoteDataSource: ICitiesRemoteDataSou
         }
     }
 
-    override suspend fun insertCountry(country: Country): Long {
+    override suspend fun insertCountries(countries: List<Country>) {
         wrapEspressoIdlingResource {
-            return localDataSource.insertCountry(country)
+            return localDataSource.insertCountries(countries)
         }
     }
 
@@ -46,16 +46,20 @@ class CitiesDefaultRepository(private val remoteDataSource: ICitiesRemoteDataSou
     override suspend fun loadCountriesAndCitiesToDb() {
         wrapEspressoIdlingResource {
             val countries = remoteDataSource.getCountries()
+            val countriesToDb = mutableListOf<Country>()
+            var countryId = 1L
             countries.keys.forEach { countryName ->
                 if(countryName.isNotEmpty()) {
-                    val country = Country(name = countryName)
-                    val countryId = localDataSource.insertCountry(country)
+                    val country = Country(countryId, countryName)
+                    countriesToDb.add(country)
                     val cities = countries[countryName]?.map { cityName ->
                         City(name = cityName, countryId = countryId)
                     }
                     localDataSource.insertCities(cities?: listOf())
+                    countryId++
                 }
             }
+            localDataSource.insertCountries(countriesToDb)
         }
     }
 }

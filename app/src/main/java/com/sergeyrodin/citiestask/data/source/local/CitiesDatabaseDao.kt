@@ -8,7 +8,7 @@ import androidx.room.Query
 @Dao
 interface CitiesDatabaseDao {
     @Insert
-    fun insertCountry(country: Country): Long
+    fun insertCountries(countries: List<Country>)
 
     @Query("SELECT * FROM countries")
     fun getCountries(): LiveData<List<Country>>

@@ -36,40 +36,45 @@ class CitiesDatabaseDaoTest {
 
     @Test
     fun insertAndGetCountry() {
-        val country =
-            Country(1, "Country")
-
-        citiesDatabase.citiesDatabaseDao.insertCountry(country)
+        val country1 =
+            Country(1, "Country1")
+        val country2 = Country(2, "Country2")
+        val countries = listOf(country1, country2)
+        citiesDatabase.citiesDatabaseDao.insertCountries(countries)
 
         val list = citiesDatabase.citiesDatabaseDao.getCountries().getOrAwaitValue()
-        assertThat(list[0].name, `is`(country.name))
+        assertThat(list[0].name, `is`(country1.name))
     }
 
     @Test
     fun insertAndGetCity() {
-        val country =
-            Country(1, "Country")
+        val country1 =
+            Country(1, "Country1")
+        val country2 = Country(2, "Country2")
+        val countries = listOf(country1, country2)
         val city1 = City(
             1,
             "City1",
-            country.id
+            country1.id
         )
-        val city2 = City(2, "City2", country.id)
+        val city2 = City(2, "City2", country1.id)
         val cities = listOf(city1, city2)
-        citiesDatabase.citiesDatabaseDao.insertCountry(country)
+        citiesDatabase.citiesDatabaseDao.insertCountries(countries)
         citiesDatabase.citiesDatabaseDao.insertCity(cities)
 
-        val loaded = citiesDatabase.citiesDatabaseDao.getCitiesByCountryId(country.id)
+        val loaded = citiesDatabase.citiesDatabaseDao.getCitiesByCountryId(country1.id)
         assertThat(loaded[0].name, `is`(cities[0].name))
     }
 
     @Test
     fun deleteCountries_sizeZero() {
-        val country = Country(1, "Country")
-        citiesDatabase.citiesDatabaseDao.insertCountry(country)
+        val country1 = Country(1, "Country1")
+        val country2 = Country(2, "Country2")
+        val countries = listOf(country1, country2)
+        citiesDatabase.citiesDatabaseDao.insertCountries(countries)
         citiesDatabase.citiesDatabaseDao.deleteAllCountries()
 
-        val countries = citiesDatabase.citiesDatabaseDao.getCountries().getOrAwaitValue()
-        assertThat(countries.size, `is`(0))
+        val loaded = citiesDatabase.citiesDatabaseDao.getCountries().getOrAwaitValue()
+        assertThat(loaded.size, `is`(0))
     }
 }

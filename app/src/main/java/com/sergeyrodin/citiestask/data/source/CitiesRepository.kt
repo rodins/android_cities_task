@@ -10,7 +10,7 @@ interface CitiesRepository {
 
     fun getCountries(): LiveData<List<Country>>
 
-    suspend fun insertCountry(country: Country): Long
+    suspend fun insertCountries(countries: List<Country>)
 
     suspend fun insertCities(cities: List<City>)
 
