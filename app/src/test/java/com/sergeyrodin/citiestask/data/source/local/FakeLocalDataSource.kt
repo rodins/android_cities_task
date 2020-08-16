@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
 class FakeLocalDataSource(private val countries: MutableList<Country> = mutableListOf(),
-                          private val cities: MutableList<City> = mutableListOf()):
+                          private val citiesList: MutableList<City> = mutableListOf()):
     ICitiesLocalDataSource {
     private val countriesLiveData = MutableLiveData<List<Country>>(countries)
     private var countryId = 0L
@@ -25,17 +25,17 @@ class FakeLocalDataSource(private val countries: MutableList<Country> = mutableL
     }
 
     override suspend fun getCitiesByCountryId(countryId: Long): List<City> {
-        return cities.filter {
+        return citiesList.filter {
             it.countryId == countryId
         }
     }
 
-    override suspend fun insertCity(city: City) {
-        cities.add(city)
+    override suspend fun insertCities(cities: List<City>) {
+        citiesList.addAll(cities)
     }
 
     override suspend fun deleteAllCountries() {
         countries.clear()
-        cities.clear()
+        citiesList.clear()
     }
 }

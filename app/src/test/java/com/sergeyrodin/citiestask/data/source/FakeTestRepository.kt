@@ -59,8 +59,8 @@ class FakeTestRepository: CitiesRepository {
         }
     }
 
-    override suspend fun insertCity(city: City) {
-        cities.add(city)
+    override suspend fun insertCities(citiesList: List<City>) {
+        cities.addAll(citiesList)
     }
 
     override suspend fun insertCountry(country: Country): Long {
