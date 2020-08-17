@@ -4,9 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
 object CitiesRemoteDataSource: ICitiesRemoteDataSource {
-    private val _loading = MutableLiveData<Boolean>()
-    override val loading: LiveData<Boolean>
-        get() = _loading
 
     private val _error = MutableLiveData<String>()
     override val error: LiveData<String>
@@ -14,13 +11,10 @@ object CitiesRemoteDataSource: ICitiesRemoteDataSource {
 
     override suspend fun getCountries(): Map<String, List<String>> {
         try{
-            _loading.value = true
             _error.value = ""
             return CitiesApi.retrofitService.getCities()
         }catch(e: Exception) {
             _error.value = "Failure: ${e.message}"
-        }finally {
-            _loading.value = false
         }
         return mapOf()
     }
