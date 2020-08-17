@@ -6,6 +6,8 @@ import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.sergeyrodin.citiestask.util.getOrAwaitValue
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
@@ -42,6 +44,17 @@ class CitiesDatabaseDaoTest {
         citiesDatabase.citiesDatabaseDao.insertCountries(countries)
 
         val list = citiesDatabase.citiesDatabaseDao.getCountries().getOrAwaitValue()
+        assertThat(list[0].name, `is`(country1.name))
+    }
+
+    @Test
+    fun insertAndGetCountryFromList() {
+        val country1 = Country(1, "Country1")
+        val country2 = Country(2, "Country2")
+        val countries = listOf(country1, country2)
+        citiesDatabase.citiesDatabaseDao.insertCountries(countries)
+
+        val list = citiesDatabase.citiesDatabaseDao.getCountriesList()
         assertThat(list[0].name, `is`(country1.name))
     }
 

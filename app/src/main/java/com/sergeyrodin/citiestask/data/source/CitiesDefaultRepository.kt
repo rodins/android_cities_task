@@ -8,8 +8,9 @@ import com.sergeyrodin.citiestask.data.source.local.ICitiesLocalDataSource
 import com.sergeyrodin.citiestask.data.source.remote.ICitiesRemoteDataSource
 import com.sergeyrodin.citiestask.util.wrapEspressoIdlingResource
 
-class CitiesDefaultRepository(private val remoteDataSource: ICitiesRemoteDataSource,
-                              private val localDataSource: ICitiesLocalDataSource
+class CitiesDefaultRepository(
+    private val remoteDataSource: ICitiesRemoteDataSource,
+    private val localDataSource: ICitiesLocalDataSource
 ) : CitiesRepository {
     override val loading = remoteDataSource.loading
     override val error = remoteDataSource.error
@@ -49,21 +50,22 @@ class CitiesDefaultRepository(private val remoteDataSource: ICitiesRemoteDataSou
             val countries = remoteDataSource.getCountries()
             val countriesToDb = mutableListOf<Country>()
             val citiesToDb = mutableListOf<City>()
-            var countryId = 1L
             countries.keys.forEach { countryName ->
-                if(countryName.isNotEmpty()) {
-                    val country = Country(countryId, countryName)
+                if (countryName.isNotEmpty()) {
+                    val country = Country(name = countryName)
                     countriesToDb.add(country)
-                    val cities = countries[countryName]?.map { cityName ->
-                        City(name = cityName, countryId = countryId)
-                    }
-                    cities?.let {
-                        citiesToDb.addAll(it)
-                    }
-                    countryId++
                 }
             }
             localDataSource.insertCountries(countriesToDb)
+            val countriesFromDb = localDataSource.getCountriesList()
+            countriesFromDb.forEach { country ->
+                val cities = countries[country.name]?.map { cityName ->
+                    City(name = cityName, countryId = country.id)
+                }
+                cities?.let {
+                    citiesToDb.addAll(it)
+                }
+            }
             localDataSource.insertCities(citiesToDb)
         }
     }

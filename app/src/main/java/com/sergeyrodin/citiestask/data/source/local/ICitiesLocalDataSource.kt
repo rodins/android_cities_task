@@ -9,6 +9,8 @@ interface ICitiesLocalDataSource {
 
     fun getCountries(): LiveData<List<Country>>
 
+    suspend fun getCountriesList(): List<Country>
+
     suspend fun insertCities(cities: List<City>)
 
     suspend fun getCitiesByCountryId(countryId: Long): List<City>

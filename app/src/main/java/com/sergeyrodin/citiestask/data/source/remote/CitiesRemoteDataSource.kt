@@ -15,6 +15,7 @@ object CitiesRemoteDataSource: ICitiesRemoteDataSource {
     override suspend fun getCountries(): Map<String, List<String>> {
         try{
             _loading.value = true
+            _error.value = ""
             return CitiesApi.retrofitService.getCities()
         }catch(e: Exception) {
             _error.value = "Failure: ${e.message}"

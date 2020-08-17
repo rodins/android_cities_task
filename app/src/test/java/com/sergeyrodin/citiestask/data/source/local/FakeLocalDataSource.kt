@@ -12,7 +12,15 @@ class FakeLocalDataSource(private val countriesList: MutableList<Country> = muta
         return countriesLiveData
     }
 
+    override suspend fun getCountriesList(): List<Country> {
+        return countriesList
+    }
+
     override suspend fun insertCountries(countries: List<Country>) {
+        var countryId = 1L
+        countries.forEach { country ->
+            country.id = countryId++
+        }
         countriesList.addAll(countries)
         countriesLiveData.value = countriesList
     }
