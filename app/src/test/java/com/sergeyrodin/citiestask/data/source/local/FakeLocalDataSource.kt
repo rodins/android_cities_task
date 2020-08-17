@@ -24,7 +24,9 @@ class FakeLocalDataSource(private val countriesList: MutableList<Country> = muta
     }
 
     override suspend fun insertCities(cities: List<City>) {
-        citiesList.addAll(cities)
+        if(countriesList.isNotEmpty()) {
+            citiesList.addAll(cities)
+        }
     }
 
     override suspend fun deleteAllCountries() {

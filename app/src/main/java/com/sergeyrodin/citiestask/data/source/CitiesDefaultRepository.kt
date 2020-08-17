@@ -1,5 +1,6 @@
 package com.sergeyrodin.citiestask.data.source
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.sergeyrodin.citiestask.data.source.local.City
 import com.sergeyrodin.citiestask.data.source.local.Country
@@ -47,6 +48,7 @@ class CitiesDefaultRepository(private val remoteDataSource: ICitiesRemoteDataSou
         wrapEspressoIdlingResource {
             val countries = remoteDataSource.getCountries()
             val countriesToDb = mutableListOf<Country>()
+            val citiesToDb = mutableListOf<City>()
             var countryId = 1L
             countries.keys.forEach { countryName ->
                 if(countryName.isNotEmpty()) {
@@ -55,11 +57,14 @@ class CitiesDefaultRepository(private val remoteDataSource: ICitiesRemoteDataSou
                     val cities = countries[countryName]?.map { cityName ->
                         City(name = cityName, countryId = countryId)
                     }
-                    localDataSource.insertCities(cities?: listOf())
+                    cities?.let {
+                        citiesToDb.addAll(it)
+                    }
                     countryId++
                 }
             }
             localDataSource.insertCountries(countriesToDb)
+            localDataSource.insertCities(citiesToDb)
         }
     }
 }

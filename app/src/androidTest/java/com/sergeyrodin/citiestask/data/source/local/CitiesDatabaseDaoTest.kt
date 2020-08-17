@@ -36,8 +36,7 @@ class CitiesDatabaseDaoTest {
 
     @Test
     fun insertAndGetCountry() {
-        val country1 =
-            Country(1, "Country1")
+        val country1 = Country(1, "Country1")
         val country2 = Country(2, "Country2")
         val countries = listOf(country1, country2)
         citiesDatabase.citiesDatabaseDao.insertCountries(countries)
@@ -48,17 +47,14 @@ class CitiesDatabaseDaoTest {
 
     @Test
     fun insertAndGetCity() {
-        val country1 =
-            Country(1, "Country1")
+        val country1 = Country(1, "Country1")
         val country2 = Country(2, "Country2")
         val countries = listOf(country1, country2)
-        val city1 = City(
-            1,
-            "City1",
-            country1.id
-        )
+        val city1 = City(1, "City1", country1.id)
         val city2 = City(2, "City2", country1.id)
-        val cities = listOf(city1, city2)
+        val city3 = City(3, "City3", country2.id)
+        val city4 = City(4, "City4", country2.id)
+        val cities = listOf(city1, city2, city3, city4)
         citiesDatabase.citiesDatabaseDao.insertCountries(countries)
         citiesDatabase.citiesDatabaseDao.insertCity(cities)
 
