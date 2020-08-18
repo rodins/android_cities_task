@@ -8,19 +8,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sergeyrodin.citiestask.data.source.local.City
 import com.sergeyrodin.citiestask.databinding.CityListItemBinding
 
-class CitiesListAdapter: ListAdapter<City, CitiesListAdapter.ViewHolder>(CitiesDiffCallback()) {
+class CitiesListAdapter(private val clickListener: CitiesListClickListener): ListAdapter<City, CitiesListAdapter.ViewHolder>(CitiesDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), clickListener)
     }
 
     class ViewHolder private constructor(private val binding: CityListItemBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(city: City) {
+        fun bind(city: City, listener: CitiesListClickListener) {
             binding.city = city
+            binding.clickListener = listener
             binding.executePendingBindings()
         }
 
@@ -42,4 +43,8 @@ class CitiesDiffCallback: DiffUtil.ItemCallback<City>() {
     override fun areContentsTheSame(oldItem: City, newItem: City): Boolean {
         return oldItem == newItem
     }
+}
+
+class CitiesListClickListener(private val listener: (name: String) -> Unit) {
+    fun onClick(name: String) = listener(name)
 }

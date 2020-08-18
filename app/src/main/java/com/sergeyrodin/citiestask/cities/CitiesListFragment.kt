@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.sergeyrodin.citiestask.CitiesTaskApplication
 import com.sergeyrodin.citiestask.R
@@ -26,7 +27,11 @@ class CitiesListFragment : Fragment() {
         val args by navArgs<CitiesListFragmentArgs>()
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-        binding.citiesList.adapter = CitiesListAdapter()
+        binding.citiesList.adapter = CitiesListAdapter(CitiesListClickListener {
+            findNavController().navigate(
+                CitiesListFragmentDirections.actionCitiesListFragmentToCityInfoFragment(it)
+            )
+        })
 
         viewModel.start(args.countryId)
 

@@ -24,5 +24,17 @@
         <argument
             android:name="title"
             app:argType="string" />
+        <action
+            android:id="@+id/action_citiesListFragment_to_cityInfoFragment"
+            app:destination="@id/cityInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cityInfoFragment"
+        android:name="com.sergeyrodin.citiestask.info.CityInfoFragment"
+        android:label="{city}"
+        tools:layout="@layout/fragment_city_info">
+        <argument
+            android:name="city"
+            app:argType="string" />
     </fragment>
 </navigation>

@@ -95,4 +95,26 @@ class MainActivityTest {
         activityScenario.close()
     }
 
+    @Test
+    fun cityClicked_titleDisplayed() = runBlocking {
+        val country1 = Country(1, "Country1")
+        val country2 = Country(2, "Country2")
+        val countries = listOf(country1, country2)
+        val city1 = City(1, "City1", country1.id)
+        val city2 = City(2, "City2", country1.id)
+        val cities = listOf(city1, city2)
+        repository.insertCountries(countries)
+        repository.insertCities(cities)
+        val activityScenario = ActivityScenario.launch(MainActivity::class.java)
+        dataBindingIdlingResource.monitorActivity(activityScenario)
+
+        onView(withText(country1.name)).perform(click())
+        onView(withText(city1.name)).perform(click())
+
+        //onView(withId(R.id.info_loading_indicator)).check(matches(isDisplayed()))
+        onView(withText(city1.name)).check(matches(isDisplayed()))
+
+        activityScenario.close()
+    }
+
 }

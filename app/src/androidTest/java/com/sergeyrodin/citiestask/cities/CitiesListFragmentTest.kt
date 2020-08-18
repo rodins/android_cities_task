@@ -1,7 +1,11 @@
 package com.sergeyrodin.citiestask.cities
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -14,12 +18,18 @@ import com.sergeyrodin.citiestask.data.source.local.Country
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mockito
+import org.mockito.Mockito.verify
 
 @RunWith(AndroidJUnit4::class)
 @MediumTest
 class CitiesListFragmentTest {
+    @get:Rule
+    val instantTaskExecutorRule = InstantTaskExecutorRule()
+
     private lateinit var repository: FakeTestRepository
 
     @Before
@@ -43,5 +53,25 @@ class CitiesListFragmentTest {
         launchFragmentInContainer<CitiesListFragment>(bundle, R.style.AppTheme)
 
         onView(withText(city.name)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun cityClick_navigationCalled() {
+        val country = Country(1, "Country")
+        val city = City(1, "City", country.id)
+        repository.addCountries(country)
+        repository.addCities(city)
+        val bundle = CitiesListFragmentArgs.Builder(country.id, country.name).build().toBundle()
+        val scenario = launchFragmentInContainer<CitiesListFragment>(bundle, R.style.AppTheme)
+        val navController = Mockito.mock(NavController::class.java)
+        scenario.onFragment {
+            Navigation.setViewNavController(it.view!!, navController)
+        }
+
+        onView(withText(city.name)).perform(click())
+
+        verify(navController).navigate(
+            CitiesListFragmentDirections.actionCitiesListFragmentToCityInfoFragment(city.name)
+        )
     }
 }
