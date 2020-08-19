@@ -90,13 +90,13 @@ class CitiesDefaultRepositoryTest{
         assertThat(citiesLoaded.size, `is`(4))
     }
 
-    @Test
+    /*@Test
     fun loadingMode_loadingTrue() {
         remoteDataSource.setLoading()
 
         val loading = subject.loading.getOrAwaitValue()
         assertThat(loading, `is`(true))
-    }
+    }*/
 
     @Test
     fun errorMode_loadingFalse() {
