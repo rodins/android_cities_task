@@ -18,6 +18,8 @@ class CityInfoFakeDataSource: CityInfoDataSource {
     override suspend fun start(country: String, city: String) {
         cityInfo.title = city
         cityInfo.summary = country
+        cityInfo.latitude = "1234"
+        cityInfo.longitude = "5678"
         cityInfoLiveData.value = cityInfo
     }
 

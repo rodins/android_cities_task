@@ -55,4 +55,16 @@ class CityInfoFragmentTest {
 
         onView(withText(country)).check(matches(isDisplayed()))
     }
+
+    @Test
+    fun latitudeLongitudeEquals() {
+        val country = "Country"
+        val city = "City"
+
+        val bundle = CityInfoFragmentArgs.Builder(city, country).build().toBundle()
+        launchFragmentInContainer<CityInfoFragment>(bundle, R.style.AppTheme)
+
+        onView(withText("1234")).check(matches(isDisplayed())) // latitude
+        onView(withText("5678")).check(matches(isDisplayed())) // longitude
+    }
 }

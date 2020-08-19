@@ -63,23 +63,25 @@
             android:id="@+id/latitude_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{viewModel.cityInfo.latitude}"
             android:textStyle="italic"
             app:layout_constraintBottom_toTopOf="@+id/longitude_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/summary_text"
-            tools:text="Latitude" />
+            tools:text="1234" />
 
         <TextView
             android:id="@+id/longitude_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{viewModel.cityInfo.longitude}"
             android:textStyle="italic"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/latitude_text"
-            tools:text="Lingitude" />
+            tools:text="5678" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
