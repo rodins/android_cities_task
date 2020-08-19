@@ -111,7 +111,7 @@ class MainActivityTest {
         onView(withText(country1.name)).perform(click())
         onView(withText(city1.name)).perform(click())
 
-        //onView(withId(R.id.info_loading_indicator)).check(matches(isDisplayed()))
+        onView(withId(R.id.info_loading_indicator)).check(matches(isDisplayed()))
         onView(withText(city1.name)).check(matches(isDisplayed()))
 
         activityScenario.close()
