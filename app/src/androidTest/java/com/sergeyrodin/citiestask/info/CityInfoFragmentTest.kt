@@ -44,4 +44,15 @@ class CityInfoFragmentTest {
 
         onView(withText(city)).check(matches(isDisplayed()))
     }
+
+    @Test
+    fun countryNameDisplayedAsSummary() {
+        val country = "Country"
+        val city = "City"
+
+        val bundle = CityInfoFragmentArgs.Builder(city, country).build().toBundle()
+        launchFragmentInContainer<CityInfoFragment>(bundle, R.style.AppTheme)
+
+        onView(withText(country)).check(matches(isDisplayed()))
+    }
 }
