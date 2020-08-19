@@ -71,7 +71,7 @@ class CitiesListFragmentTest {
         onView(withText(city.name)).perform(click())
 
         verify(navController).navigate(
-            CitiesListFragmentDirections.actionCitiesListFragmentToCityInfoFragment(city.name)
+            CitiesListFragmentDirections.actionCitiesListFragmentToCityInfoFragment(city.name, country.name)
         )
     }
 }

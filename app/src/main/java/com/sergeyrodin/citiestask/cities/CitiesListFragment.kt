@@ -29,7 +29,7 @@ class CitiesListFragment : Fragment() {
         binding.viewModel = viewModel
         binding.citiesList.adapter = CitiesListAdapter(CitiesListClickListener {
             findNavController().navigate(
-                CitiesListFragmentDirections.actionCitiesListFragmentToCityInfoFragment(it)
+                CitiesListFragmentDirections.actionCitiesListFragmentToCityInfoFragment(it, args.title)
             )
         })
 
