@@ -25,12 +25,23 @@ class CityInfoViewModelTest {
     fun cityInput_titleEquals() {
         val country = "Country"
         val city = "City"
-
+        dataSource.dataMode()
         subject.start(country, city)
 
         val cityInfo = subject.cityInfo.getOrAwaitValue()
         assertThat(cityInfo.title, `is`(city))
         assertThat(cityInfo.summary, `is`(country))
+    }
+
+    @Test
+    fun loadingMode_loadingTrue() {
+        val country = "Country"
+        val city = "City"
+        dataSource.loadingMode()
+        subject.start(country, city)
+
+        val loading = subject.loading.getOrAwaitValue()
+        assertThat(loading, `is`(true))
     }
 
 }
