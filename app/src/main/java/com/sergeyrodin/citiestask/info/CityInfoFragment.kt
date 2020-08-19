@@ -5,7 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
+import com.sergeyrodin.citiestask.CitiesTaskApplication
 import com.sergeyrodin.citiestask.R
+import com.sergeyrodin.citiestask.databinding.FragmentCityInfoBinding
 
 class CityInfoFragment : Fragment() {
 
@@ -13,8 +17,20 @@ class CityInfoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_city_info, container, false)
+        val binding = FragmentCityInfoBinding.inflate(inflater, container, false)
+        val args by navArgs<CityInfoFragmentArgs>()
+        val viewModel by viewModels<CityInfoViewModel>{
+            CityInfoViewModelFactory(
+                (requireContext().applicationContext as CitiesTaskApplication).cityInfoDataSource
+            )
+        }
+
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+
+        viewModel.start(args.country, args.city)
+
+        return binding.root
     }
 
 }

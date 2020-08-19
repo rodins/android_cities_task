@@ -9,12 +9,18 @@ import com.sergeyrodin.citiestask.data.source.local.CitiesDatabase
 import com.sergeyrodin.citiestask.data.source.local.CitiesLocalDataSource
 import com.sergeyrodin.citiestask.data.source.local.ICitiesLocalDataSource
 import com.sergeyrodin.citiestask.data.source.remote.CitiesRemoteDataSource
+import com.sergeyrodin.citiestask.info.CityInfoDataSource
+import com.sergeyrodin.citiestask.info.CityInfoRemoteDataSource
 
 object ServiceLocator {
     private var database: CitiesDatabase? = null
 
     @Volatile
     var citiesRepository: CitiesRepository? = null
+        @VisibleForTesting set
+
+    @Volatile
+    var cityInfoDataSource: CityInfoDataSource? = null
         @VisibleForTesting set
 
     private val lock = Any()
@@ -32,10 +38,19 @@ object ServiceLocator {
         }
     }
 
+    @VisibleForTesting
+    fun resetCityInfoDataSource() {
+        cityInfoDataSource = null
+    }
+
     fun provideCitiesRepository(context: Context): CitiesRepository {
         synchronized(this) {
             return citiesRepository ?: createCitiesRepository(context)
         }
+    }
+
+    fun provideCityInfoDataSource(): CityInfoDataSource {
+        return cityInfoDataSource ?: CityInfoRemoteDataSource()
     }
 
     private fun createCitiesRepository(context: Context): CitiesRepository {
