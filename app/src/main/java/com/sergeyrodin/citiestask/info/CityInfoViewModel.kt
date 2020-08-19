@@ -1,12 +1,16 @@
 package com.sergeyrodin.citiestask.info
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 
 class CityInfoViewModel(private val dataSource: CityInfoDataSource): ViewModel() {
     val loading = dataSource.loading
     val cityInfo = dataSource.getCityInfo()
 
     fun start(country: String, city: String) {
-        dataSource.start(country, city)
+        viewModelScope.launch {
+            dataSource.start(country, city)
+        }
     }
 }

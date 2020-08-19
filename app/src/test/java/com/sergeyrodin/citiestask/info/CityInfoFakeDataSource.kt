@@ -11,7 +11,7 @@ class CityInfoFakeDataSource: CityInfoDataSource {
     private val cityInfo = CityInfo()
     private val cityInfoLiveData = MutableLiveData<CityInfo>()
 
-    override fun start(country: String, city: String) {
+    override suspend fun start(country: String, city: String) {
         cityInfo.title = city
         cityInfo.summary = country
         cityInfoLiveData.value = cityInfo

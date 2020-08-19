@@ -6,5 +6,5 @@ interface CityInfoDataSource {
     val loading: LiveData<Boolean>
     fun getCityInfo(): LiveData<CityInfo>
 
-    fun start(country: String, city: String)
+    suspend fun start(country: String, city: String)
 }
