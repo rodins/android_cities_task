@@ -7,6 +7,7 @@ import kotlinx.coroutines.launch
 class CityInfoViewModel(private val dataSource: CityInfoDataSource): ViewModel() {
     val loading = dataSource.loading
     val cityInfo = dataSource.getCityInfo()
+    val error = dataSource.error
 
     fun start(country: String, city: String) {
         viewModelScope.launch {

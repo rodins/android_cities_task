@@ -44,4 +44,15 @@ class CityInfoViewModelTest {
         assertThat(loading, `is`(true))
     }
 
+    @Test
+    fun errorMode_textEquals() {
+        val country = "Country"
+        val city = "City"
+        dataSource.errorMode()
+        subject.start(country, city)
+
+        val error = subject.error.getOrAwaitValue()
+        assertThat(error, `is`("Error"))
+    }
+
 }
