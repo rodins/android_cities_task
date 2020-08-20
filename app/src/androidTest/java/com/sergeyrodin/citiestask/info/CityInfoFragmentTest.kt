@@ -4,11 +4,11 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.sergeyrodin.citiestask.R
 import com.sergeyrodin.citiestask.ServiceLocator
+import org.hamcrest.CoreMatchers.not
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
@@ -38,7 +38,7 @@ class CityInfoFragmentTest {
     fun cityNameDisplayed() {
         val country = "Country"
         val city = "City"
-
+        dataSource.dataMode()
         val bundle = CityInfoFragmentArgs.Builder(city, country).build().toBundle()
         launchFragmentInContainer<CityInfoFragment>(bundle, R.style.AppTheme)
 
@@ -49,7 +49,7 @@ class CityInfoFragmentTest {
     fun countryNameDisplayedAsSummary() {
         val country = "Country"
         val city = "City"
-
+        dataSource.dataMode()
         val bundle = CityInfoFragmentArgs.Builder(city, country).build().toBundle()
         launchFragmentInContainer<CityInfoFragment>(bundle, R.style.AppTheme)
 
@@ -60,11 +60,55 @@ class CityInfoFragmentTest {
     fun latitudeLongitudeEquals() {
         val country = "Country"
         val city = "City"
-
+        dataSource.dataMode()
         val bundle = CityInfoFragmentArgs.Builder(city, country).build().toBundle()
         launchFragmentInContainer<CityInfoFragment>(bundle, R.style.AppTheme)
 
         onView(withText("1234")).check(matches(isDisplayed())) // latitude
         onView(withText("5678")).check(matches(isDisplayed())) // longitude
+    }
+
+    @Test
+    fun loadingMode_loadingIndicatorVisible() {
+        val country = "Country"
+        val city = "City"
+        dataSource.loadingMode()
+        val bundle = CityInfoFragmentArgs.Builder(city, country).build().toBundle()
+        launchFragmentInContainer<CityInfoFragment>(bundle, R.style.AppTheme)
+
+        onView(withId(R.id.info_loading_indicator)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun loadingMode_titleNotDisplayed() {
+        val country = "Country"
+        val city = "City"
+        dataSource.loadingMode()
+        val bundle = CityInfoFragmentArgs.Builder(city, country).build().toBundle()
+        launchFragmentInContainer<CityInfoFragment>(bundle, R.style.AppTheme)
+
+        onView(withText(city)).check(matches(not(isDisplayed())))
+    }
+
+    @Test
+    fun dataMode_loadingNotDisplayed() {
+        val country = "Country"
+        val city = "City"
+        dataSource.dataMode()
+        val bundle = CityInfoFragmentArgs.Builder(city, country).build().toBundle()
+        launchFragmentInContainer<CityInfoFragment>(bundle, R.style.AppTheme)
+
+        onView(withId(R.id.info_loading_indicator)).check(matches(not(isDisplayed())))
+    }
+
+    @Test
+    fun errorMode_titleNotDisplayed() {
+        val country = "Country"
+        val city = "City"
+        dataSource.errorMode()
+        val bundle = CityInfoFragmentArgs.Builder(city, country).build().toBundle()
+        launchFragmentInContainer<CityInfoFragment>(bundle, R.style.AppTheme)
+
+        onView(withText(city)).check(matches(not(isDisplayed())))
     }
 }
