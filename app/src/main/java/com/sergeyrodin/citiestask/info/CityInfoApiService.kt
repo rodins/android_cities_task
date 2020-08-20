@@ -20,7 +20,7 @@ private val retrofit = Retrofit.Builder()
 
 interface CityInfoApiService {
     @GET("wikipediaSearchJSON?username=rodins")
-    suspend fun getCityInfo(@Query("q") country: String, @Query("title")city: String): List<CityInfo>
+    suspend fun getCityInfo(@Query("q") country: String, @Query("title")city: String): GeoNames
 }
 
 object CityInfoApi{

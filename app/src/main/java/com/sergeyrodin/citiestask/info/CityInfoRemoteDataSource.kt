@@ -22,8 +22,8 @@ class CityInfoRemoteDataSource: CityInfoDataSource {
         try {
             _loading.value = true
             _error.value = ""
-            val list = CityInfoApi.retrofitService.getCityInfo(country, city)
-            _cityInfo.value = list[0]
+            val geoNames = CityInfoApi.retrofitService.getCityInfo(country, city)
+            _cityInfo.value = geoNames.geoNames[0]
         }catch(e: Exception) {
             _error.value = e.localizedMessage
         }finally {
