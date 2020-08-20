@@ -1,19 +1,33 @@
 package com.sergeyrodin.citiestask.info
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import java.lang.Exception
 
 class CityInfoRemoteDataSource: CityInfoDataSource {
+    private val _loading = MutableLiveData<Boolean>()
     override val loading: LiveData<Boolean>
-        get() = TODO("Not yet implemented")
+        get() = _loading
 
+    private val _cityInfo = MutableLiveData<CityInfo>()
     override fun getCityInfo(): LiveData<CityInfo> {
-        TODO("Not yet implemented")
+        return _cityInfo
     }
 
+    private val _error = MutableLiveData<String>()
     override val error: LiveData<String>
-        get() = TODO("Not yet implemented")
+        get() = _error
 
     override suspend fun start(country: String, city: String) {
-        TODO("Not yet implemented")
+        try {
+            _loading.value = true
+            _error.value = ""
+            val list = CityInfoApi.retrofitService.getCityInfo(country, city)
+            _cityInfo.value = list[0]
+        }catch(e: Exception) {
+            _error.value = e.localizedMessage
+        }finally {
+            _loading.value = false
+        }
     }
 }
