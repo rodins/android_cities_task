@@ -133,6 +133,7 @@
             android:scaleType="fitXY"
             android:adjustViewBounds="true"
             app:imageUrl="@{viewModel.cityInfo.thumbnailImg}"
+            app:viewVisible="@{viewModel.dataVisible}"
             app:layout_constraintBottom_toTopOf="@+id/title_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
