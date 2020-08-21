@@ -1,4 +1,4 @@
-package com.sergeyrodin.citiestask.info.service
+package com.sergeyrodin.citiestask.info.remote
 
 import com.sergeyrodin.citiestask.info.GeoNames
 import com.squareup.moshi.Moshi
@@ -19,12 +19,12 @@ private val retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL)
     .build()
 
-interface CityInfoApiService {
+internal interface CityInfoApiService {
     @GET("wikipediaSearchJSON?username=rodins")
     suspend fun getCityInfo(@Query("q") country: String, @Query("title")city: String): GeoNames
 }
 
-object CityInfoApi{
+internal object CityInfoApi{
     val retrofitService: CityInfoApiService by lazy {
         retrofit.create(CityInfoApiService::class.java)
     }

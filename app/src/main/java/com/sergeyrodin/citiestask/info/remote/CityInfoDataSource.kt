@@ -1,4 +1,4 @@
-package com.sergeyrodin.citiestask.info.service
+package com.sergeyrodin.citiestask.info.remote
 
 import com.sergeyrodin.citiestask.info.CityInfo
 
