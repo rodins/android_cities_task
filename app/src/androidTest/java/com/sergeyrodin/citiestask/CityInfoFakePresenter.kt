@@ -1,9 +1,11 @@
-package com.sergeyrodin.citiestask.info
+package com.sergeyrodin.citiestask
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.sergeyrodin.citiestask.info.CityInfo
+import com.sergeyrodin.citiestask.info.view.CityInfoPresenter
 
-class CityInfoFakeDataSource: CityInfoDataSource {
+class CityInfoFakePresenter: CityInfoPresenter {
     private val _loading = MutableLiveData<Boolean>()
     override val loading: LiveData<Boolean>
         get() = _loading
@@ -17,7 +19,7 @@ class CityInfoFakeDataSource: CityInfoDataSource {
     override val cityInfo: LiveData<CityInfo>
         get() = _cityInfo
 
-    override suspend fun start(country: String, city: String) {
+    override suspend fun fetchCityInfo(country: String, city: String) {
         cityInfoData.title = city
         cityInfoData.summary = country
         cityInfoData.latitude = "1234"

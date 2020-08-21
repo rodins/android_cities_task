@@ -1,4 +1,4 @@
-package com.sergeyrodin.citiestask.info
+package com.sergeyrodin.citiestask.info.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.sergeyrodin.citiestask.CitiesTaskApplication
-import com.sergeyrodin.citiestask.R
 import com.sergeyrodin.citiestask.databinding.FragmentCityInfoBinding
 
 class CityInfoFragment : Fragment() {

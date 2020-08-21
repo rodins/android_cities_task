@@ -1,7 +1,9 @@
 package com.sergeyrodin.citiestask.info
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.sergeyrodin.citiestask.CityInfoFakePresenter
 import com.sergeyrodin.citiestask.data.source.getOrAwaitValue
+import com.sergeyrodin.citiestask.info.view.CityInfoViewModel
 import org.hamcrest.CoreMatchers.`is`
 import org.junit.Assert.*
 import org.junit.Before
@@ -12,20 +14,20 @@ class CityInfoViewModelTest {
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var dataSource: CityInfoFakeDataSource
+    private lateinit var presenter: CityInfoFakePresenter
     private lateinit var subject: CityInfoViewModel
 
     @Before
     fun initDataSource() {
-        dataSource = CityInfoFakeDataSource()
-        subject = CityInfoViewModel(dataSource)
+        presenter = CityInfoFakePresenter()
+        subject = CityInfoViewModel(presenter)
     }
 
     @Test
     fun cityInput_titleEquals() {
         val country = "Country"
         val city = "City"
-        dataSource.dataMode()
+        presenter.dataMode()
         subject.start(country, city)
 
         val cityInfo = subject.cityInfo.getOrAwaitValue()
@@ -37,7 +39,7 @@ class CityInfoViewModelTest {
     fun loadingMode_loadingTrue() {
         val country = "Country"
         val city = "City"
-        dataSource.loadingMode()
+        presenter.loadingMode()
         subject.start(country, city)
 
         val loading = subject.loading.getOrAwaitValue()
@@ -48,7 +50,7 @@ class CityInfoViewModelTest {
     fun errorMode_textEquals() {
         val country = "Country"
         val city = "City"
-        dataSource.errorMode()
+        presenter.errorMode()
         subject.start(country, city)
 
         val error = subject.error.getOrAwaitValue()
@@ -59,7 +61,7 @@ class CityInfoViewModelTest {
     fun cityInput_loadingFalse() {
         val country = "Country"
         val city = "City"
-        dataSource.dataMode()
+        presenter.dataMode()
         subject.start(country, city)
 
         val loading = subject.loading.getOrAwaitValue()
@@ -70,7 +72,7 @@ class CityInfoViewModelTest {
     fun cityInput_errorEmpty() {
         val country = "Country"
         val city = "City"
-        dataSource.dataMode()
+        presenter.dataMode()
         subject.start(country, city)
 
         val error = subject.error.getOrAwaitValue()
@@ -81,7 +83,7 @@ class CityInfoViewModelTest {
     fun cityInput_dataVisible() {
         val country = "Country"
         val city = "City"
-        dataSource.dataMode()
+        presenter.dataMode()
         subject.start(country, city)
 
         val visible = subject.dataVisible.getOrAwaitValue()
@@ -92,7 +94,7 @@ class CityInfoViewModelTest {
     fun loadingMode_dataNotVisible() {
         val country = "Country"
         val city = "City"
-        dataSource.loadingMode()
+        presenter.loadingMode()
         subject.start(country, city)
 
         val visible = subject.dataVisible.getOrAwaitValue()
@@ -103,7 +105,7 @@ class CityInfoViewModelTest {
     fun errorMode_dataNotVisible() {
         val country = "Country"
         val city = "City"
-        dataSource.errorMode()
+        presenter.errorMode()
         subject.start(country, city)
 
         val visible = subject.dataVisible.getOrAwaitValue()

@@ -1,5 +1,6 @@
-package com.sergeyrodin.citiestask.info
+package com.sergeyrodin.citiestask.info.service
 
+import com.sergeyrodin.citiestask.info.GeoNames
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit

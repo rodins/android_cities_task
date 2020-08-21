@@ -9,8 +9,10 @@ import com.sergeyrodin.citiestask.data.source.local.CitiesDatabase
 import com.sergeyrodin.citiestask.data.source.local.CitiesLocalDataSource
 import com.sergeyrodin.citiestask.data.source.local.ICitiesLocalDataSource
 import com.sergeyrodin.citiestask.data.source.remote.CitiesRemoteDataSource
-import com.sergeyrodin.citiestask.info.CityInfoDataSource
-import com.sergeyrodin.citiestask.info.CityInfoRemoteDataSource
+import com.sergeyrodin.citiestask.info.service.CityInfoRemoteDataSource
+import com.sergeyrodin.citiestask.info.service.CityInfoServiceImpl
+import com.sergeyrodin.citiestask.info.view.CityInfoPresenter
+import com.sergeyrodin.citiestask.info.view.CityInfoServicePresenter
 
 object ServiceLocator {
     private var database: CitiesDatabase? = null
@@ -20,7 +22,7 @@ object ServiceLocator {
         @VisibleForTesting set
 
     @Volatile
-    var cityInfoDataSource: CityInfoDataSource? = null
+    var cityInfoPresenter: CityInfoPresenter? = null
         @VisibleForTesting set
 
     private val lock = Any()
@@ -39,8 +41,8 @@ object ServiceLocator {
     }
 
     @VisibleForTesting
-    fun resetCityInfoDataSource() {
-        cityInfoDataSource = null
+    fun resetCityInfoPresenter() {
+        cityInfoPresenter = null
     }
 
     fun provideCitiesRepository(context: Context): CitiesRepository {
@@ -49,8 +51,8 @@ object ServiceLocator {
         }
     }
 
-    fun provideCityInfoDataSource(): CityInfoDataSource {
-        return cityInfoDataSource ?: CityInfoRemoteDataSource()
+    fun provideCityInfoPresenter(): CityInfoPresenter {
+        return cityInfoPresenter ?: CityInfoServicePresenter(CityInfoServiceImpl(CityInfoRemoteDataSource()))
     }
 
     private fun createCitiesRepository(context: Context): CitiesRepository {

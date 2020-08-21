@@ -6,11 +6,13 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.sergeyrodin.citiestask.CityInfoFakePresenter
 import com.sergeyrodin.citiestask.R
 import com.sergeyrodin.citiestask.ServiceLocator
+import com.sergeyrodin.citiestask.info.view.CityInfoFragment
+import com.sergeyrodin.citiestask.info.view.CityInfoFragmentArgs
 import org.hamcrest.CoreMatchers.not
 import org.junit.After
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -21,24 +23,24 @@ class CityInfoFragmentTest {
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var dataSource: CityInfoFakeDataSource
+    private lateinit var presenter: CityInfoFakePresenter
 
     @Before
     fun initDataSource() {
-        dataSource = CityInfoFakeDataSource()
-        ServiceLocator.cityInfoDataSource = dataSource
+        presenter = CityInfoFakePresenter()
+        ServiceLocator.cityInfoPresenter = presenter
     }
 
     @After
     fun resetDataSource() {
-        ServiceLocator.resetCityInfoDataSource()
+        ServiceLocator.resetCityInfoPresenter()
     }
 
     @Test
     fun cityNameDisplayed() {
         val country = "Country"
         val city = "City"
-        dataSource.dataMode()
+        presenter.dataMode()
         val bundle = CityInfoFragmentArgs.Builder(city, country).build().toBundle()
         launchFragmentInContainer<CityInfoFragment>(bundle, R.style.AppTheme)
 
@@ -49,7 +51,7 @@ class CityInfoFragmentTest {
     fun countryNameDisplayedAsSummary() {
         val country = "Country"
         val city = "City"
-        dataSource.dataMode()
+        presenter.dataMode()
         val bundle = CityInfoFragmentArgs.Builder(city, country).build().toBundle()
         launchFragmentInContainer<CityInfoFragment>(bundle, R.style.AppTheme)
 
@@ -60,7 +62,7 @@ class CityInfoFragmentTest {
     fun latitudeLongitudeEquals() {
         val country = "Country"
         val city = "City"
-        dataSource.dataMode()
+        presenter.dataMode()
         val bundle = CityInfoFragmentArgs.Builder(city, country).build().toBundle()
         launchFragmentInContainer<CityInfoFragment>(bundle, R.style.AppTheme)
 
@@ -72,7 +74,7 @@ class CityInfoFragmentTest {
     fun loadingMode_loadingIndicatorVisible() {
         val country = "Country"
         val city = "City"
-        dataSource.loadingMode()
+        presenter.loadingMode()
         val bundle = CityInfoFragmentArgs.Builder(city, country).build().toBundle()
         launchFragmentInContainer<CityInfoFragment>(bundle, R.style.AppTheme)
 
@@ -83,7 +85,7 @@ class CityInfoFragmentTest {
     fun loadingMode_titleNotDisplayed() {
         val country = "Country"
         val city = "City"
-        dataSource.loadingMode()
+        presenter.loadingMode()
         val bundle = CityInfoFragmentArgs.Builder(city, country).build().toBundle()
         launchFragmentInContainer<CityInfoFragment>(bundle, R.style.AppTheme)
 
@@ -94,7 +96,7 @@ class CityInfoFragmentTest {
     fun dataMode_loadingNotDisplayed() {
         val country = "Country"
         val city = "City"
-        dataSource.dataMode()
+        presenter.dataMode()
         val bundle = CityInfoFragmentArgs.Builder(city, country).build().toBundle()
         launchFragmentInContainer<CityInfoFragment>(bundle, R.style.AppTheme)
 
@@ -105,7 +107,7 @@ class CityInfoFragmentTest {
     fun errorMode_titleNotDisplayed() {
         val country = "Country"
         val city = "City"
-        dataSource.errorMode()
+        presenter.errorMode()
         val bundle = CityInfoFragmentArgs.Builder(city, country).build().toBundle()
         launchFragmentInContainer<CityInfoFragment>(bundle, R.style.AppTheme)
 

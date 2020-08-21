@@ -6,13 +6,13 @@
     <data>
         <variable
             name="viewModel"
-            type="com.sergeyrodin.citiestask.info.CityInfoViewModel" />
+            type="com.sergeyrodin.citiestask.info.view.CityInfoViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".info.CityInfoFragment">
+        tools:context=".info.view.CityInfoFragment">
 
         <ProgressBar
             android:id="@+id/info_loading_indicator"

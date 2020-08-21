@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/cityInfoFragment"
-        android:name="com.sergeyrodin.citiestask.info.CityInfoFragment"
+        android:name="com.sergeyrodin.citiestask.info.view.CityInfoFragment"
         android:label="{city}"
         tools:layout="@layout/fragment_city_info">
         <argument
