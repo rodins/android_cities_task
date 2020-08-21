@@ -39,13 +39,16 @@
             android:id="@+id/title_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:text="@{viewModel.cityInfo.title}"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/summary_text"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/thumbnail_image"
             app:layout_constraintVertical_chainStyle="packed"
             app:viewVisible="@{viewModel.dataVisible}"
             tools:text="Kyiv" />
@@ -55,13 +58,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
             android:text="@{viewModel.cityInfo.summary}"
             android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/latitude_text"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title_text"
             app:viewVisible="@{viewModel.dataVisible}"
@@ -71,7 +75,6 @@
             android:id="@+id/latitude_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:text="@{viewModel.cityInfo.latitude}"
             android:textStyle="italic"
             app:layout_constraintBottom_toTopOf="@+id/longitude_text"
@@ -102,12 +105,12 @@
             android:layout_marginEnd="8dp"
             android:text="@string/latitude_label"
             android:textStyle="italic"
-            app:viewVisible="@{viewModel.dataVisible}"
             app:layout_constraintBottom_toBottomOf="@+id/latitude_text"
             app:layout_constraintEnd_toStartOf="@+id/latitude_text"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:viewVisible="@{viewModel.dataVisible}" />
 
         <TextView
             android:id="@+id/longitude_label"
@@ -116,11 +119,28 @@
             android:layout_marginEnd="8dp"
             android:text="@string/longitude_label"
             android:textStyle="italic"
-            app:viewVisible="@{viewModel.dataVisible}"
             app:layout_constraintBottom_toBottomOf="@+id/longitude_text"
             app:layout_constraintEnd_toStartOf="@+id/longitude_text"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="@+id/latitude_label" />
+            app:layout_constraintStart_toStartOf="@+id/latitude_label"
+            app:viewVisible="@{viewModel.dataVisible}" />
+
+        <ImageView
+            android:id="@+id/thumbnail_image"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="8dp"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            app:imageUrl="@{viewModel.cityInfo.thumbnailImg}"
+            app:layout_constraintBottom_toTopOf="@+id/title_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:srcCompat="@tools:sample/backgrounds/scenic"
+            android:contentDescription="@string/city_image_descr" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

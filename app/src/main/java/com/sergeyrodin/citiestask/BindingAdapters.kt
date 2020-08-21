@@ -1,8 +1,11 @@
 package com.sergeyrodin.citiestask
 
 import android.view.View
+import android.widget.ImageView
+import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.sergeyrodin.citiestask.cities.CitiesListAdapter
 import com.sergeyrodin.citiestask.countries.CountriesListAdapter
 import com.sergeyrodin.citiestask.data.source.local.City
@@ -23,4 +26,14 @@ fun bindCityRecyclerView(view: RecyclerView, list: List<City>?) {
 @BindingAdapter("viewVisible")
 fun bindViewBooleanVisible(view: View, visible: Boolean) {
     view.visibility = if(visible) View.VISIBLE else View.INVISIBLE
+}
+
+@BindingAdapter("imageUrl")
+fun bindImage(imgView: ImageView, imgUrl: String?) {
+    imgUrl?.let{
+        val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
+        Glide.with(imgView.context)
+            .load(imgUri)
+            .into(imgView)
+    }
 }
