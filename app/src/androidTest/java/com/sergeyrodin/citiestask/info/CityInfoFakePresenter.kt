@@ -1,4 +1,4 @@
-package com.sergeyrodin.citiestask
+package com.sergeyrodin.citiestask.info
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
