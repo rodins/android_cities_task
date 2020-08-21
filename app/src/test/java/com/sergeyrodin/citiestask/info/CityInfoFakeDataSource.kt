@@ -12,19 +12,17 @@ class CityInfoFakeDataSource: CityInfoDataSource {
     override val error: LiveData<String>
         get() = _error
 
-    private val cityInfo = CityInfo()
-    private val cityInfoLiveData = MutableLiveData<CityInfo>()
+    private val cityInfoData = CityInfo()
+    private val _cityInfo = MutableLiveData<CityInfo>()
+    override val cityInfo: LiveData<CityInfo>
+        get() = _cityInfo
 
     override suspend fun start(country: String, city: String) {
-        cityInfo.title = city
-        cityInfo.summary = country
-        cityInfo.latitude = "1234"
-        cityInfo.longitude = "5678"
-        cityInfoLiveData.value = cityInfo
-    }
-
-    override fun getCityInfo(): LiveData<CityInfo> {
-        return cityInfoLiveData
+        cityInfoData.title = city
+        cityInfoData.summary = country
+        cityInfoData.latitude = "1234"
+        cityInfoData.longitude = "5678"
+        _cityInfo.value = cityInfoData
     }
 
     fun dataMode() {

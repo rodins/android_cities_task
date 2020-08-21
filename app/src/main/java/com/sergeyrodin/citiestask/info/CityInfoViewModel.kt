@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 
 class CityInfoViewModel(private val dataSource: CityInfoDataSource): ViewModel() {
     val loading = dataSource.loading
-    val cityInfo = dataSource.getCityInfo()
+    val cityInfo = dataSource.cityInfo
     val error = dataSource.error
 
     val dataVisible = switchMap(loading){ loadingVisible ->

@@ -10,9 +10,8 @@ class CityInfoRemoteDataSource: CityInfoDataSource {
         get() = _loading
 
     private val _cityInfo = MutableLiveData<CityInfo>()
-    override fun getCityInfo(): LiveData<CityInfo> {
-        return _cityInfo
-    }
+    override val cityInfo: LiveData<CityInfo>
+        get() = _cityInfo
 
     private val _error = MutableLiveData<String>()
     override val error: LiveData<String>
