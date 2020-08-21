@@ -19,6 +19,9 @@ class CityInfoRemoteDataSource: CityInfoDataSource {
         get() = _error
 
     override suspend fun start(country: String, city: String) {
+        if(_cityInfo.value?.title?.isNotEmpty() == true){
+            return
+        }
         try {
             _loading.value = true
             _error.value = ""
