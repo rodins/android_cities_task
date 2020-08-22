@@ -19,7 +19,7 @@ class CityInfoFakePresenter: CityInfoPresenter {
     override val cityInfo: LiveData<CityInfo>
         get() = _cityInfo
 
-    override suspend fun start(country: String, city: String) {
+    override suspend fun fetchCityInfo(country: String, city: String) {
         cityInfoData.title = city
         cityInfoData.summary = country
         cityInfoData.latitude = "1234"

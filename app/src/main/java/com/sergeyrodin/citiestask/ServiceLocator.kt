@@ -9,7 +9,8 @@ import com.sergeyrodin.citiestask.data.source.local.CitiesDatabase
 import com.sergeyrodin.citiestask.data.source.local.CitiesLocalDataSource
 import com.sergeyrodin.citiestask.data.source.local.ICitiesLocalDataSource
 import com.sergeyrodin.citiestask.data.source.remote.CitiesRemoteDataSource
-import com.sergeyrodin.citiestask.info.remote.CityInfoRemoteDataSource
+import com.sergeyrodin.citiestask.info.remote.CityInfoConverterDataSource
+import com.sergeyrodin.citiestask.info.remote.GeoNamesRemoteDataSource
 import com.sergeyrodin.citiestask.info.service.CityInfoServiceImpl
 import com.sergeyrodin.citiestask.info.view.CityInfoPresenter
 import com.sergeyrodin.citiestask.info.view.CityInfoServicePresenter
@@ -53,7 +54,9 @@ object ServiceLocator {
 
     fun provideCityInfoPresenter(): CityInfoPresenter {
         return cityInfoPresenter ?: CityInfoServicePresenter(CityInfoServiceImpl(
-            CityInfoRemoteDataSource()
+            CityInfoConverterDataSource(
+                GeoNamesRemoteDataSource()
+            )
         ))
     }
 
