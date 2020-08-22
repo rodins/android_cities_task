@@ -114,6 +114,17 @@ class CityInfoFragmentTest {
     }
 
     @Test
+    fun errorMode_errorDisplayed() {
+        val country = "Country"
+        val city = "City"
+        presenter.errorMode()
+        val bundle = CityInfoFragmentArgs.Builder(city, country).build().toBundle()
+        launchFragmentInContainer<CityInfoFragment>(bundle, R.style.AppTheme)
+
+        onView(withText("Error")).check(matches(isDisplayed()))
+    }
+
+    @Test
     fun cityInfoEmpty_textDisplayed() {
         val country = "Country"
         val city = "City"
