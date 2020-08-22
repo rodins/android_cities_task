@@ -112,4 +112,15 @@ class CityInfoFragmentTest {
 
         onView(withText(city)).check(matches(not(isDisplayed())))
     }
+
+    @Test
+    fun cityInfoEmpty_textDisplayed() {
+        val country = "Country"
+        val city = "City"
+        presenter.emptyMode()
+        val bundle = CityInfoFragmentArgs.Builder(city, country).build().toBundle()
+        launchFragmentInContainer<CityInfoFragment>(bundle, R.style.AppTheme)
+
+        onView(withText(R.string.no_info_text)).check(matches(isDisplayed()))
+    }
 }

@@ -36,6 +36,19 @@
             tools:text="Error" />
 
         <TextView
+            android:id="@+id/empty_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_info_text"
+            app:viewVisible="@{viewModel.emptyCityInfoText}"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="No info" />
+
+        <TextView
             android:id="@+id/title_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

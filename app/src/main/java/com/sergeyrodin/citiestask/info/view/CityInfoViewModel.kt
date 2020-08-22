@@ -13,9 +13,15 @@ class CityInfoViewModel(private val presenter: CityInfoPresenter): ViewModel() {
     val error = presenter.error
 
     val dataVisible = switchMap(loading){ loadingVisible ->
-        map(error){ errorText ->
-            errorText.isEmpty() && !loadingVisible
+        switchMap(cityInfo) { cityInfoData ->
+            map(error){ errorText ->
+                errorText.isEmpty() && !loadingVisible && cityInfoData.title.isNotEmpty()
+            }
         }
+    }
+
+    val emptyCityInfoText = map(cityInfo){
+        it.title.isEmpty()
     }
 
     fun start(country: String, city: String) {

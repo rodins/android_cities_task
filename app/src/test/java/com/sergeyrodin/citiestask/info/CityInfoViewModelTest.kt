@@ -112,4 +112,26 @@ class CityInfoViewModelTest {
         assertThat(visible, `is`(false))
     }
 
+    @Test
+    fun emptyCityInfo_emptyInfoTextVisible() {
+        val country = "Country"
+        val city = "City"
+        presenter.emptyMode()
+        subject.start(country, city)
+
+        val visible = subject.emptyCityInfoText.getOrAwaitValue()
+        assertThat(visible, `is`(true))
+    }
+
+    @Test
+    fun emptyCityInfo_dataVisibleFalse() {
+        val country = "Country"
+        val city = "City"
+        presenter.emptyMode()
+        subject.start(country, city)
+
+        val visible = subject.dataVisible.getOrAwaitValue()
+        assertThat(visible, `is`(false))
+    }
+
 }

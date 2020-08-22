@@ -6,6 +6,7 @@ import com.sergeyrodin.citiestask.info.CityInfo
 import com.sergeyrodin.citiestask.info.view.CityInfoPresenter
 
 class CityInfoFakePresenter: CityInfoPresenter {
+    private var emptyInfo = false
     private val _loading = MutableLiveData<Boolean>()
     override val loading: LiveData<Boolean>
         get() = _loading
@@ -20,11 +21,15 @@ class CityInfoFakePresenter: CityInfoPresenter {
         get() = _cityInfo
 
     override suspend fun fetchCityInfo(country: String, city: String) {
-        cityInfoData.title = city
-        cityInfoData.summary = country
-        cityInfoData.latitude = "1234"
-        cityInfoData.longitude = "5678"
-        _cityInfo.value = cityInfoData
+        if(emptyInfo) {
+            _cityInfo.value = CityInfo()
+        }else {
+            cityInfoData.title = city
+            cityInfoData.summary = country
+            cityInfoData.latitude = "1234"
+            cityInfoData.longitude = "5678"
+            _cityInfo.value = cityInfoData
+        }
     }
 
     fun dataMode() {
@@ -40,5 +45,11 @@ class CityInfoFakePresenter: CityInfoPresenter {
     fun errorMode() {
         _error.value = "Error"
         _loading.value = false
+    }
+
+    fun emptyMode() {
+        emptyInfo = true
+        _loading.value = false
+        _error.value = ""
     }
 }
