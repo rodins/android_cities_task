@@ -5,7 +5,9 @@ import com.sergeyrodin.citiestask.info.CityInfo
 class CityInfoConverterDataSource(private val dataSource: GeoNamesDataSource): CityInfoDataSource {
     override suspend fun fetchCityInfo(country: String, city: String): CityInfo {
         val geonames = dataSource.fetchGeoNames(country, city)
-        val item = geonames.geoNames.find {
+        val item = geonames.geoNames.find{
+            it.title == city
+        }?:geonames.geoNames.find {
             it.feature == "city"
         }?:geonames.geoNames.find{
             it.title.indexOf(city) == 0
