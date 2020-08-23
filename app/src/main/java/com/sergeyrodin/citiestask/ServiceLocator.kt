@@ -11,9 +11,9 @@ import com.sergeyrodin.citiestask.data.source.local.ICitiesLocalDataSource
 import com.sergeyrodin.citiestask.data.source.remote.CitiesRemoteDataSource
 import com.sergeyrodin.citiestask.info.remote.CityInfoConverterDataSource
 import com.sergeyrodin.citiestask.info.remote.GeoNamesRemoteDataSource
-import com.sergeyrodin.citiestask.info.service.CityInfoServiceImpl
+import com.sergeyrodin.citiestask.info.interactor.CityInfoInteractor
+import com.sergeyrodin.citiestask.info.view.ICityInfoPresenter
 import com.sergeyrodin.citiestask.info.view.CityInfoPresenter
-import com.sergeyrodin.citiestask.info.view.CityInfoServicePresenter
 
 object ServiceLocator {
     private var database: CitiesDatabase? = null
@@ -23,7 +23,7 @@ object ServiceLocator {
         @VisibleForTesting set
 
     @Volatile
-    var cityInfoPresenter: CityInfoPresenter? = null
+    var cityInfoPresenter: ICityInfoPresenter? = null
         @VisibleForTesting set
 
     private val lock = Any()
@@ -52,8 +52,8 @@ object ServiceLocator {
         }
     }
 
-    fun provideCityInfoPresenter(): CityInfoPresenter {
-        return cityInfoPresenter ?: CityInfoServicePresenter(CityInfoServiceImpl(
+    fun provideCityInfoPresenter(): ICityInfoPresenter {
+        return cityInfoPresenter ?: CityInfoPresenter(CityInfoInteractor(
             CityInfoConverterDataSource(
                 GeoNamesRemoteDataSource()
             )

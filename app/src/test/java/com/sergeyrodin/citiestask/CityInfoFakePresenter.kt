@@ -3,9 +3,9 @@ package com.sergeyrodin.citiestask
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.sergeyrodin.citiestask.info.CityInfo
-import com.sergeyrodin.citiestask.info.view.CityInfoPresenter
+import com.sergeyrodin.citiestask.info.view.ICityInfoPresenter
 
-class CityInfoFakePresenter: CityInfoPresenter {
+class CityInfoFakePresenter: ICityInfoPresenter {
     private var emptyInfo = false
     private val _loading = MutableLiveData<Boolean>()
     override val loading: LiveData<Boolean>

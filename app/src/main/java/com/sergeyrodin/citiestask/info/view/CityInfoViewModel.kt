@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
-class CityInfoViewModel(private val presenter: CityInfoPresenter): ViewModel() {
+class CityInfoViewModel(private val presenter: ICityInfoPresenter): ViewModel() {
     val loading = presenter.loading
     val cityInfo = presenter.cityInfo
     val error = presenter.error
@@ -31,7 +31,7 @@ class CityInfoViewModel(private val presenter: CityInfoPresenter): ViewModel() {
     }
 }
 
-class CityInfoViewModelFactory(private val presenter: CityInfoPresenter): ViewModelProvider.Factory {
+class CityInfoViewModelFactory(private val presenter: ICityInfoPresenter): ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return CityInfoViewModel(presenter) as T

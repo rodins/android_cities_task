@@ -20,7 +20,7 @@ class CityInfoFragment : Fragment() {
         val args by navArgs<CityInfoFragmentArgs>()
         val viewModel by viewModels<CityInfoViewModel>{
             CityInfoViewModelFactory(
-                (requireContext().applicationContext as CitiesTaskApplication).cityInfoDataSource
+                (requireContext().applicationContext as CitiesTaskApplication).cityInfoPresenter
             )
         }
 

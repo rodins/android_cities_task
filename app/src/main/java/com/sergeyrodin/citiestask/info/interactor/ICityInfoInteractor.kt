@@ -1,7 +1,7 @@
-package com.sergeyrodin.citiestask.info.service
+package com.sergeyrodin.citiestask.info.interactor
 
 import com.sergeyrodin.citiestask.info.CityInfo
 
-interface CityInfoService {
+interface ICityInfoInteractor {
     suspend fun fetchCityInfo(country: String, city: String): CityInfo
 }
