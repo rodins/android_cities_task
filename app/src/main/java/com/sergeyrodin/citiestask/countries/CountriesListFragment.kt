@@ -43,6 +43,7 @@ class CountriesListFragment : Fragment() {
 
         viewModel.countries.observe(viewLifecycleOwner, Observer{
             if(it.isEmpty()) {
+                swipeRefresh.isRefreshing = true
                 viewModel.loadCountries()
             }
         })
