@@ -74,4 +74,16 @@ class CitiesListFragmentTest {
             CitiesListFragmentDirections.actionCitiesListFragmentToCityInfoFragment(city.name, country.name)
         )
     }
+
+    @Test
+    fun cityIconDisplayed() {
+        val country = Country(1, "Country")
+        val city = City(1, "City", country.id)
+        repository.addCountries(country)
+        repository.addCities(city)
+        val bundle = CitiesListFragmentArgs.Builder(country.id, country.name).build().toBundle()
+        launchFragmentInContainer<CitiesListFragment>(bundle, R.style.AppTheme)
+
+        onView(withId(R.id.city_icon)).check(matches(isDisplayed()))
+    }
 }

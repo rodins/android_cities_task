@@ -113,6 +113,15 @@ class CountriesListFragmentTest {
         onView(withText("Country from net")).check(matches(isDisplayed()))
     }
 
+    @Test
+    fun displayCountryIcon() {
+        val country = Country(1, "Country")
+        repository.addCountries(country)
+        launchFragmentInContainer<CountriesListFragment>(null, R.style.AppTheme)
+
+        onView(withId(R.id.country_icon)).check(matches(isDisplayed()))
+    }
+
     private fun clickRefreshAction(scenario: FragmentScenario<CountriesListFragment>) {
         // Create dummy menu item with the desired item id
         val context = ApplicationProvider.getApplicationContext<Context>()

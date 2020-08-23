@@ -8,4 +8,6 @@
     <string name="longitude_label">Longitude</string>
     <string name="city_image_descr">City image</string>
     <string name="no_info_text">No info</string>
+    <string name="country_icon_description">Country Icon</string>
+    <string name="city_icon_description">City icon</string>
 </resources>

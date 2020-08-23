@@ -20,6 +20,14 @@
         android:onClick="@{() -> clickListener.onClick(country.id, country.name)}"
         android:layout_marginBottom="8dp">
 
+        <ImageView
+            android:id="@+id/country_icon"
+            android:layout_marginHorizontal="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/country_icon_description"
+            android:src="@drawable/countries_16"/>
+
         <TextView
             android:id="@+id/country_name"
             android:layout_width="match_parent"
