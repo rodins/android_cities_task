@@ -73,15 +73,6 @@ class CountriesListFragmentTest {
     }
 
     @Test
-    fun loadingMode_loadingDisplayed() {
-        repository.loadingMode()
-
-        launchFragmentInContainer<CountriesListFragment>(null, R.style.AppTheme)
-
-        onView(withId(R.id.loading_indicator)).check(matches(isDisplayed()))
-    }
-
-    @Test
     fun errorMode_errorDisplayed() {
         repository.errorMode()
 
@@ -102,7 +93,6 @@ class CountriesListFragmentTest {
 
     @Test
     fun refreshCountries_nameDisplayed() {
-        val country = Country(1, "Country from db")
         repository.addCountries()
         val json = mapOf("Country from net" to listOf("City1", "City2", "City3"))
         repository.addJsonMap(json)
