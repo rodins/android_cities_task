@@ -14,20 +14,20 @@
         android:layout_height="match_parent"
         tools:context=".countries.CountriesListFragment">
 
-        <ProgressBar
-            android:id="@+id/loading_indicator"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            app:viewVisible="@{viewModel.loading}"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/countries_list"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swiperefresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="8dp"
-            app:countriesListData="@{viewModel.countries}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/countries_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                app:countriesListData="@{viewModel.countries}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <TextView
             android:layout_width="wrap_content"
