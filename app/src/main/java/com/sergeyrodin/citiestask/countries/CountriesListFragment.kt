@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.snackbar.Snackbar
 import com.sergeyrodin.citiestask.CitiesTaskApplication
 import com.sergeyrodin.citiestask.R
 import com.sergeyrodin.citiestask.databinding.FragmentCountriesListBinding
@@ -51,6 +52,12 @@ class CountriesListFragment : Fragment() {
         viewModel.loading.observe(viewLifecycleOwner, Observer{ isLoading ->
             if(!isLoading) {
                 swipeRefresh.isRefreshing = false
+            }
+        })
+
+        viewModel.error.observe(viewLifecycleOwner, Observer{ error ->
+            if(error.isNotEmpty()) {
+                Snackbar.make(requireView(), error, Snackbar.LENGTH_LONG).show()
             }
         })
 
