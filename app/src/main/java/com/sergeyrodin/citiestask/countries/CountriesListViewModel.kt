@@ -2,12 +2,7 @@ package com.sergeyrodin.citiestask.countries
 
 import androidx.lifecycle.*
 import com.sergeyrodin.citiestask.data.source.CitiesRepository
-import com.sergeyrodin.citiestask.data.source.local.Country
-import com.sergeyrodin.citiestask.data.source.remote.CitiesApi
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class CountriesListViewModel(private val repository: CitiesRepository) : ViewModel() {
 

@@ -9,8 +9,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.sergeyrodin.citiestask.cities.CitiesListAdapter
 import com.sergeyrodin.citiestask.countries.CountriesListAdapter
-import com.sergeyrodin.citiestask.data.source.local.City
-import com.sergeyrodin.citiestask.data.source.local.Country
+import com.sergeyrodin.citiestask.data.source.City
+import com.sergeyrodin.citiestask.data.source.Country
 
 @BindingAdapter("countriesListData")
 fun bindCountryRecyclerView(view: RecyclerView, list: List<Country>?) {

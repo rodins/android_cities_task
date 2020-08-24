@@ -1,9 +1,6 @@
 package com.sergeyrodin.citiestask.data.source
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.sergeyrodin.citiestask.data.source.CitiesDefaultRepository
-import com.sergeyrodin.citiestask.data.source.local.City
-import com.sergeyrodin.citiestask.data.source.local.Country
 import com.sergeyrodin.citiestask.data.source.local.FakeLocalDataSource
 import com.sergeyrodin.citiestask.data.source.remote.FakeRemoteDataSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi

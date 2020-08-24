@@ -5,7 +5,7 @@
     <data>
         <variable
             name="country"
-            type="com.sergeyrodin.citiestask.data.source.local.Country" />
+            type="com.sergeyrodin.citiestask.data.source.Country" />
 
         <variable
             name="clickListener"

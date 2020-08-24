@@ -1,8 +1,8 @@
 package com.sergeyrodin.citiestask.data.source.local
 
 import androidx.lifecycle.LiveData
-import com.sergeyrodin.citiestask.data.source.local.City
-import com.sergeyrodin.citiestask.data.source.local.Country
+import com.sergeyrodin.citiestask.data.source.City
+import com.sergeyrodin.citiestask.data.source.Country
 
 interface ICitiesLocalDataSource {
     suspend fun insertCountries(countries: List<Country>)

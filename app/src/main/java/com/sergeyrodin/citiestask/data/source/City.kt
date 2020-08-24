@@ -1,4 +1,4 @@
-package com.sergeyrodin.citiestask.data.source.local
+package com.sergeyrodin.citiestask.data.source
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

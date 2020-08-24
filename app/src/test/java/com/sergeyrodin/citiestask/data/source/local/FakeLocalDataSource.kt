@@ -2,6 +2,8 @@ package com.sergeyrodin.citiestask.data.source.local
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.sergeyrodin.citiestask.data.source.City
+import com.sergeyrodin.citiestask.data.source.Country
 
 class FakeLocalDataSource(private val countriesList: MutableList<Country> = mutableListOf(),
                           private val citiesList: MutableList<City> = mutableListOf()):

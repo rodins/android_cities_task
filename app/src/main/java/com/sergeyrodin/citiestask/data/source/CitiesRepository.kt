@@ -1,8 +1,6 @@
 package com.sergeyrodin.citiestask.data.source
 
 import androidx.lifecycle.LiveData
-import com.sergeyrodin.citiestask.data.source.local.City
-import com.sergeyrodin.citiestask.data.source.local.Country
 
 interface CitiesRepository {
     val loading: LiveData<Boolean>

@@ -3,8 +3,8 @@ package com.sergeyrodin.citiestask
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.sergeyrodin.citiestask.data.source.CitiesRepository
-import com.sergeyrodin.citiestask.data.source.local.City
-import com.sergeyrodin.citiestask.data.source.local.Country
+import com.sergeyrodin.citiestask.data.source.City
+import com.sergeyrodin.citiestask.data.source.Country
 
 class FakeTestRepository: CitiesRepository {
     private val countriesLiveData = MutableLiveData<List<Country>>()

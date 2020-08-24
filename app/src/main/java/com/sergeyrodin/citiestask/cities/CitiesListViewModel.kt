@@ -2,7 +2,7 @@ package com.sergeyrodin.citiestask.cities
 
 import androidx.lifecycle.*
 import com.sergeyrodin.citiestask.data.source.CitiesRepository
-import com.sergeyrodin.citiestask.data.source.local.City
+import com.sergeyrodin.citiestask.data.source.City
 import kotlinx.coroutines.launch
 
 class CitiesListViewModel(private val repository: CitiesRepository): ViewModel() {

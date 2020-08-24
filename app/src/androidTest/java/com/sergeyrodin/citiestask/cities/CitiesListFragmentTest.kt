@@ -13,10 +13,9 @@ import androidx.test.filters.MediumTest
 import com.sergeyrodin.citiestask.FakeTestRepository
 import com.sergeyrodin.citiestask.R
 import com.sergeyrodin.citiestask.ServiceLocator
-import com.sergeyrodin.citiestask.data.source.local.City
-import com.sergeyrodin.citiestask.data.source.local.Country
+import com.sergeyrodin.citiestask.data.source.City
+import com.sergeyrodin.citiestask.data.source.Country
 import org.junit.After
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

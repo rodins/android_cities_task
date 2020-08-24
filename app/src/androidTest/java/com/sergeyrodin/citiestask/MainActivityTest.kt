@@ -10,13 +10,12 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.sergeyrodin.citiestask.data.source.CitiesRepository
-import com.sergeyrodin.citiestask.data.source.local.City
-import com.sergeyrodin.citiestask.data.source.local.Country
+import com.sergeyrodin.citiestask.data.source.City
+import com.sergeyrodin.citiestask.data.source.Country
 import com.sergeyrodin.citiestask.util.DataBindingIdlingResource
 import com.sergeyrodin.citiestask.util.EspressoIdlingResource
 import com.sergeyrodin.citiestask.util.monitorActivity
 import kotlinx.coroutines.runBlocking
-import org.hamcrest.CoreMatchers.not
 import org.junit.After
 import org.junit.Before
 import org.junit.Test

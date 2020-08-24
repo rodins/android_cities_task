@@ -3,7 +3,7 @@ package com.sergeyrodin.citiestask.countries
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.sergeyrodin.citiestask.data.source.FakeTestRepository
 import com.sergeyrodin.citiestask.data.source.getOrAwaitValue
-import com.sergeyrodin.citiestask.data.source.local.Country
+import com.sergeyrodin.citiestask.data.source.Country
 import org.hamcrest.CoreMatchers.`is`
 import org.junit.Assert.*
 import org.junit.Before

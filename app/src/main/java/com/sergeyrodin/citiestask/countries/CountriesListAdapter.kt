@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.sergeyrodin.citiestask.data.source.local.Country
+import com.sergeyrodin.citiestask.data.source.Country
 import com.sergeyrodin.citiestask.databinding.CountryListItemBinding
 
 class CountriesListAdapter(private val clickListener: CountriesClickListener): ListAdapter<Country, CountriesListAdapter.ViewHolder>(CountriesDiffCallback()) {
