@@ -5,5 +5,6 @@ import androidx.lifecycle.LiveData
 interface ICitiesRemoteDataSource {
     val error: LiveData<String>
 
-    suspend fun getCountries(): Map<String, List<String>>
+    suspend fun getCountriesNames(): Set<String>
+    fun getCitiesNames(countryName: String): List<String>?
 }

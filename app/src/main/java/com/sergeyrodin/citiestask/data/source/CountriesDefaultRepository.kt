@@ -37,11 +37,10 @@ class CountriesDefaultRepository(
     override suspend fun loadCountriesAndCitiesToDb() {
         wrapEspressoIdlingResource {
             _loading.value = true
-            val countries = remoteDataSource.getCountries()
-            if(countries.isNotEmpty()) {
+            val countriesNames = remoteDataSource.getCountriesNames()
+            if(countriesNames.isNotEmpty()) {
                 val countriesToDb = mutableListOf<Country>()
-                val citiesToDb = mutableListOf<City>()
-                countries.keys.forEach { countryName ->
+                countriesNames.forEach { countryName ->
                     if (countryName.isNotEmpty()) {
                         val country = Country(name = countryName)
                         countriesToDb.add(country)
@@ -49,8 +48,9 @@ class CountriesDefaultRepository(
                 }
                 localDataSource.insertCountries(countriesToDb)
                 val countriesFromDb = localDataSource.getCountriesList()
+                val citiesToDb = mutableListOf<City>()
                 countriesFromDb.forEach { country ->
-                    val cities = countries[country.name]?.map { cityName ->
+                    val cities = remoteDataSource.getCitiesNames(country.name)?.map { cityName ->
                         City(name = cityName, countryId = country.id)
                     }
                     cities?.let {

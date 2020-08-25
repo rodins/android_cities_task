@@ -9,14 +9,21 @@ object CitiesRemoteDataSource: ICitiesRemoteDataSource {
     override val error: LiveData<String>
         get() = _error
 
-    override suspend fun getCountries(): Map<String, List<String>> {
+    private lateinit var countriesMap: Map<String, List<String>>
+
+    override suspend fun getCountriesNames(): Set<String> {
         try{
             _error.value = ""
-            return CitiesApi.retrofitService.getCities()
+            countriesMap = CitiesApi.retrofitService.getCities()
+            return countriesMap.keys
         }catch(e: Exception) {
             _error.value = "Failure: ${e.message}"
         }
-        return mapOf()
+        return setOf()
+    }
+
+    override fun getCitiesNames(countryName: String): List<String>? {
+        return countriesMap[countryName]
     }
 }
 
