@@ -61,7 +61,8 @@ class CitiesDefaultRepositoryTest{
 
     @Test
     fun getCities_sizeEquals() = runBlockingTest{
-        val citiesLoaded = subject.getCitiesByCountryId(country1.id)
+        subject.fetchCitiesByCountryId(country1.id)
+        val citiesLoaded = subject.cities.getOrAwaitValue()
         assertThat(citiesLoaded.size, `is`(3))
     }
 
@@ -83,24 +84,9 @@ class CitiesDefaultRepositoryTest{
         val country5 = countriesLoaded.find {
             it.name == "Country5"
         }
-        val citiesLoaded = subject.getCitiesByCountryId(country5?.id?:-1L)
+        subject.fetchCitiesByCountryId(country5?.id?:-1L)
+        val citiesLoaded = subject.cities.getOrAwaitValue()
         assertThat(citiesLoaded.size, `is`(4))
-    }
-
-    /*@Test
-    fun loadingMode_loadingTrue() {
-        remoteDataSource.setLoading()
-
-        val loading = subject.loading.getOrAwaitValue()
-        assertThat(loading, `is`(true))
-    }*/
-
-    @Test
-    fun errorMode_loadingFalse() {
-        remoteDataSource.setError()
-
-        val loading = subject.loading.getOrAwaitValue()
-        assertThat(loading, `is`(false))
     }
 
     @Test

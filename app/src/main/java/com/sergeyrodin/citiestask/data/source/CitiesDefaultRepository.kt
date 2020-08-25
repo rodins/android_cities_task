@@ -14,6 +14,10 @@ class CitiesDefaultRepository(
     override val loading: LiveData<Boolean>
         get() = _loading
 
+    private val _cities = MutableLiveData<List<City>>()
+    override val cities: LiveData<List<City>>
+        get() = _cities
+
     override val error = remoteDataSource.error
 
     override fun getCountries(): LiveData<List<Country>> {
@@ -22,9 +26,11 @@ class CitiesDefaultRepository(
         }
     }
 
-    override suspend fun getCitiesByCountryId(countryId: Long): List<City> {
+    override suspend fun fetchCitiesByCountryId(countryId: Long) {
         wrapEspressoIdlingResource {
-            return localDataSource.getCitiesByCountryId(countryId)
+            if(_cities.value == null) {
+                _cities.value = localDataSource.getCitiesByCountryId(countryId)
+            }
         }
     }
 

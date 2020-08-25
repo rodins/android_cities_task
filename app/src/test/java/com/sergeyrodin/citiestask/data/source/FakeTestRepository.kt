@@ -18,6 +18,10 @@ class FakeTestRepository: CitiesRepository {
     override val loading: LiveData<Boolean>
         get() = _loading
 
+    private val _cities = MutableLiveData<List<City>>()
+    override val cities: LiveData<List<City>>
+        get() = _cities
+
     fun loadingMode() {
         _loading.value = true
         _error.value = ""
@@ -49,10 +53,10 @@ class FakeTestRepository: CitiesRepository {
         return countriesLiveData
     }
 
-    override suspend fun getCitiesByCountryId(countryId: Long): List<City> {
+    override suspend fun fetchCitiesByCountryId(countryId: Long) {
         _loading.value = false
         _error.value = ""
-        return citiesList.filter {
+        _cities.value = citiesList.filter {
             it.countryId == countryId
         }
     }
