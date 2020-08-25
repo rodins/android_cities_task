@@ -3,6 +3,7 @@ package com.sergeyrodin.citiestask
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -115,6 +116,28 @@ class MainActivityTest {
 
         onView(withId(R.id.info_loading_indicator)).check(matches(isDisplayed()))
         onView(withText(city1.name)).check(matches(isDisplayed()))
+
+        activityScenario.close()
+    }
+
+    @Test
+    fun countryChanged_cityChanged() = runBlocking{
+        val country1 = Country(1, "Country1")
+        val country2 = Country(2, "Country2")
+        val city1 = City(1, "City1", country1.id)
+        val city2 = City(2, "City2", country2.id)
+        val countries = listOf(country1, country2)
+        val cities = listOf(city1, city2)
+        countriesRepository.insertCountries(countries)
+        citiesRepository.insertCities(cities)
+        val activityScenario = ActivityScenario.launch(MainActivity::class.java)
+        dataBindingIdlingResource.monitorActivity(activityScenario)
+
+        onView(withText(country1.name)).perform(click())
+        pressBack()
+        onView(withText(country2.name)).perform(click())
+
+        onView(withText(city2.name)).check(matches(isDisplayed()))
 
         activityScenario.close()
     }

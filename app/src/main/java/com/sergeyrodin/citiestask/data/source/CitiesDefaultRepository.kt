@@ -15,9 +15,7 @@ class CitiesDefaultRepository(
 
     override suspend fun fetchCitiesByCountryId(countryId: Long) {
         wrapEspressoIdlingResource {
-            if(_cities.value == null) {
-                _cities.value = localDataSource.getCitiesByCountryId(countryId)
-            }
+            _cities.value = localDataSource.getCitiesByCountryId(countryId)
         }
     }
 
