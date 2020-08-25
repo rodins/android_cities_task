@@ -5,6 +5,8 @@ import androidx.annotation.VisibleForTesting
 import androidx.room.Room
 import com.sergeyrodin.citiestask.data.source.CitiesDefaultRepository
 import com.sergeyrodin.citiestask.data.source.CitiesRepository
+import com.sergeyrodin.citiestask.data.source.CountriesDefaultRepository
+import com.sergeyrodin.citiestask.data.source.CountriesRepository
 import com.sergeyrodin.citiestask.data.source.local.CitiesDatabase
 import com.sergeyrodin.citiestask.data.source.local.CitiesLocalDataSource
 import com.sergeyrodin.citiestask.data.source.local.ICitiesLocalDataSource
@@ -20,6 +22,10 @@ object ServiceLocator {
 
     @Volatile
     var citiesRepository: CitiesRepository? = null
+        @VisibleForTesting set
+
+    @Volatile
+    var countriesRepository: CountriesRepository? = null
         @VisibleForTesting set
 
     @Volatile
@@ -46,6 +52,12 @@ object ServiceLocator {
         cityInfoPresenter = null
     }
 
+    fun provideCountriesRepository(context: Context): CountriesRepository{
+        synchronized(this) {
+            return countriesRepository ?: createCountriesRepository(context)
+        }
+    }
+
     fun provideCitiesRepository(context: Context): CitiesRepository {
         synchronized(this) {
             return citiesRepository ?: createCitiesRepository(context)
@@ -60,13 +72,19 @@ object ServiceLocator {
         ))
     }
 
+    private fun createCountriesRepository(context: Context): CountriesRepository {
+        val newRepo = CountriesDefaultRepository(CitiesRemoteDataSource, createCitiesLocalDataSource(context))
+        countriesRepository = newRepo
+        return newRepo
+    }
+
     private fun createCitiesRepository(context: Context): CitiesRepository {
-        val newRepo = CitiesDefaultRepository(CitiesRemoteDataSource, createCitesLocalDataSource(context))
+        val newRepo = CitiesDefaultRepository(createCitiesLocalDataSource(context))
         citiesRepository = newRepo
         return newRepo
     }
 
-    private fun createCitesLocalDataSource(context: Context): ICitiesLocalDataSource {
+    private fun createCitiesLocalDataSource(context: Context): ICitiesLocalDataSource {
         val database = database ?: createDatabase(context)
         return CitiesLocalDataSource(database.citiesDatabaseDao)
     }

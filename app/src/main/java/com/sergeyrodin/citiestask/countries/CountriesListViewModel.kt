@@ -2,9 +2,10 @@ package com.sergeyrodin.citiestask.countries
 
 import androidx.lifecycle.*
 import com.sergeyrodin.citiestask.data.source.CitiesRepository
+import com.sergeyrodin.citiestask.data.source.CountriesRepository
 import kotlinx.coroutines.launch
 
-class CountriesListViewModel(private val repository: CitiesRepository) : ViewModel() {
+class CountriesListViewModel(private val repository: CountriesRepository) : ViewModel() {
 
     val loading = repository.loading
     val error = repository.error
@@ -24,7 +25,7 @@ class CountriesListViewModel(private val repository: CitiesRepository) : ViewMod
     }
 }
 
-class CountriesListViewModelFactory(private val repository: CitiesRepository) :
+class CountriesListViewModelFactory(private val repository: CountriesRepository) :
     ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

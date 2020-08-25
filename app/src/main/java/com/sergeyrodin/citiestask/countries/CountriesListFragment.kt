@@ -17,7 +17,7 @@ class CountriesListFragment : Fragment() {
 
     private val viewModel by viewModels<CountriesListViewModel> {
         CountriesListViewModelFactory(
-            (requireContext().applicationContext as CitiesTaskApplication).citiesRepository
+            (requireContext().applicationContext as CitiesTaskApplication).countriesRepository
         )
     }
 

@@ -1,9 +1,10 @@
 package com.sergeyrodin.citiestask.countries
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.sergeyrodin.citiestask.data.source.FakeTestRepository
+import com.sergeyrodin.citiestask.data.source.FakeCitiesRepository
 import com.sergeyrodin.citiestask.data.source.getOrAwaitValue
 import com.sergeyrodin.citiestask.data.source.Country
+import com.sergeyrodin.citiestask.data.source.FakeCountriesRepository
 import org.hamcrest.CoreMatchers.`is`
 import org.junit.Assert.*
 import org.junit.Before
@@ -14,12 +15,12 @@ class CountriesListViewModelTest{
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var repository: FakeTestRepository
+    private lateinit var repository: FakeCountriesRepository
     private lateinit var subject: CountriesListViewModel
 
     @Before
     fun initRepository() {
-        repository = FakeTestRepository()
+        repository = FakeCountriesRepository()
         subject = CountriesListViewModel(repository)
     }
 
