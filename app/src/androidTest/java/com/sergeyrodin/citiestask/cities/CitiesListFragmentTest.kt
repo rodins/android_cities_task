@@ -10,7 +10,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
-import com.sergeyrodin.citiestask.FakeTestRepository
+import com.sergeyrodin.citiestask.FakeCitiesRepository
 import com.sergeyrodin.citiestask.R
 import com.sergeyrodin.citiestask.ServiceLocator
 import com.sergeyrodin.citiestask.data.source.City
@@ -29,11 +29,11 @@ class CitiesListFragmentTest {
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var repository: FakeTestRepository
+    private lateinit var repository: FakeCitiesRepository
 
     @Before
     fun initRepository() {
-        repository = FakeTestRepository()
+        repository = FakeCitiesRepository()
         ServiceLocator.citiesRepository = repository
     }
 
@@ -44,11 +44,10 @@ class CitiesListFragmentTest {
 
     @Test
     fun inputCity_nameDisplayed() {
-        val country = Country(1, "Country")
-        val city = City(1, "City", country.id)
-        repository.addCountries(country)
+        val countryId = 1L
+        val city = City(1, "City", countryId)
         repository.addCities(city)
-        val bundle = CitiesListFragmentArgs.Builder(country.id, country.name).build().toBundle()
+        val bundle = CitiesListFragmentArgs.Builder(countryId, "Country").build().toBundle()
         launchFragmentInContainer<CitiesListFragment>(bundle, R.style.AppTheme)
 
         onView(withText(city.name)).check(matches(isDisplayed()))
@@ -58,7 +57,6 @@ class CitiesListFragmentTest {
     fun cityClick_navigationCalled() {
         val country = Country(1, "Country")
         val city = City(1, "City", country.id)
-        repository.addCountries(country)
         repository.addCities(city)
         val bundle = CitiesListFragmentArgs.Builder(country.id, country.name).build().toBundle()
         val scenario = launchFragmentInContainer<CitiesListFragment>(bundle, R.style.AppTheme)
@@ -78,7 +76,6 @@ class CitiesListFragmentTest {
     fun cityIconDisplayed() {
         val country = Country(1, "Country")
         val city = City(1, "City", country.id)
-        repository.addCountries(country)
         repository.addCities(city)
         val bundle = CitiesListFragmentArgs.Builder(country.id, country.name).build().toBundle()
         launchFragmentInContainer<CitiesListFragment>(bundle, R.style.AppTheme)

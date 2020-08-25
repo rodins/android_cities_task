@@ -43,6 +43,7 @@ object ServiceLocator {
                 close()
             }
             database = null
+            countriesRepository = null
             citiesRepository = null
         }
     }

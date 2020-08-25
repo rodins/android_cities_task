@@ -14,7 +14,8 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
-import com.sergeyrodin.citiestask.FakeTestRepository
+import com.sergeyrodin.citiestask.FakeCitiesRepository
+import com.sergeyrodin.citiestask.FakeCountriesRepository
 import com.sergeyrodin.citiestask.R
 import com.sergeyrodin.citiestask.ServiceLocator
 import com.sergeyrodin.citiestask.data.source.Country
@@ -32,12 +33,12 @@ class CountriesListFragmentTest {
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var repository: FakeTestRepository
+    private lateinit var repository: FakeCountriesRepository
 
     @Before
     fun initRepository() {
-        repository = FakeTestRepository()
-        ServiceLocator.citiesRepository = repository
+        repository = FakeCountriesRepository()
+        ServiceLocator.countriesRepository = repository
     }
 
     @After

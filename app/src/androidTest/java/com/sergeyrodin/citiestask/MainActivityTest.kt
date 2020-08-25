@@ -11,6 +11,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.sergeyrodin.citiestask.data.source.CitiesRepository
 import com.sergeyrodin.citiestask.data.source.City
+import com.sergeyrodin.citiestask.data.source.CountriesRepository
 import com.sergeyrodin.citiestask.data.source.Country
 import com.sergeyrodin.citiestask.util.DataBindingIdlingResource
 import com.sergeyrodin.citiestask.util.EspressoIdlingResource
@@ -25,7 +26,8 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class MainActivityTest {
-    private lateinit var repository: CitiesRepository
+    private lateinit var countriesRepository: CountriesRepository
+    private lateinit var citiesRepository: CitiesRepository
     private val dataBindingIdlingResource = DataBindingIdlingResource()
 
     @Before
@@ -42,9 +44,10 @@ class MainActivityTest {
 
     @Before
     fun init() {
-        repository = ServiceLocator.provideCitiesRepository(getApplicationContext())
+        countriesRepository = ServiceLocator.provideCountriesRepository(getApplicationContext())
+        citiesRepository = ServiceLocator.provideCitiesRepository(getApplicationContext())
         runBlocking {
-            repository.deleteAllCountries()
+            countriesRepository.deleteAllCountries()
         }
     }
 
@@ -61,8 +64,8 @@ class MainActivityTest {
         val city1 = City(1, "City1", country1.id)
         val city2 = City(2, "City2", country1.id)
         val cities = listOf(city1, city2)
-        repository.insertCountries(countries)
-        repository.insertCities(cities)
+        countriesRepository.insertCountries(countries)
+        citiesRepository.insertCities(cities)
         val activityScenario = ActivityScenario.launch(MainActivity::class.java)
         dataBindingIdlingResource.monitorActivity(activityScenario)
 
@@ -81,8 +84,8 @@ class MainActivityTest {
         val city1 = City(1, "City1", country1.id)
         val city2 = City(2, "City2", country1.id)
         val cities = listOf(city1, city2)
-        repository.insertCountries(countries)
-        repository.insertCities(cities)
+        countriesRepository.insertCountries(countries)
+        citiesRepository.insertCities(cities)
         val activityScenario = ActivityScenario.launch(MainActivity::class.java)
         dataBindingIdlingResource.monitorActivity(activityScenario)
 
@@ -102,8 +105,8 @@ class MainActivityTest {
         val city1 = City(1, "City1", country1.id)
         val city2 = City(2, "City2", country1.id)
         val cities = listOf(city1, city2)
-        repository.insertCountries(countries)
-        repository.insertCities(cities)
+        countriesRepository.insertCountries(countries)
+        citiesRepository.insertCities(cities)
         val activityScenario = ActivityScenario.launch(MainActivity::class.java)
         dataBindingIdlingResource.monitorActivity(activityScenario)
 
