@@ -9,13 +9,10 @@ import com.sergeyrodin.citiestask.util.wrapEspressoIdlingResource
 class CitiesDefaultRepository(
     private val localDataSource: ICitiesLocalDataSource
 ) : CitiesRepository {
-    private val _cities = MutableLiveData<List<City>>()
-    override val cities: LiveData<List<City>>
-        get() = _cities
 
-    override suspend fun fetchCitiesByCountryId(countryId: Long) {
+    override suspend fun fetchCitiesByCountryId(countryId: Long): List<City> {
         wrapEspressoIdlingResource {
-            _cities.value = localDataSource.getCitiesByCountryId(countryId)
+            return localDataSource.getCitiesByCountryId(countryId)
         }
     }
 

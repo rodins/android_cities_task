@@ -6,9 +6,6 @@ import androidx.lifecycle.MutableLiveData
 class FakeCitiesRepository: CitiesRepository {
 
     private val citiesList = mutableListOf<City>()
-    private val _cities = MutableLiveData<List<City>>()
-    override val cities: LiveData<List<City>>
-        get() = _cities
 
     fun addCities(vararg city: City) {
         city.forEach {
@@ -16,14 +13,13 @@ class FakeCitiesRepository: CitiesRepository {
         }
     }
 
-    override suspend fun fetchCitiesByCountryId(countryId: Long) {
-        _cities.value = citiesList.filter {
+    override suspend fun fetchCitiesByCountryId(countryId: Long): List<City> {
+        return citiesList.filter {
             it.countryId == countryId
         }
     }
 
     override suspend fun insertCities(cities: List<City>) {
         citiesList.addAll(cities)
-        _cities.value = citiesList
     }
 }

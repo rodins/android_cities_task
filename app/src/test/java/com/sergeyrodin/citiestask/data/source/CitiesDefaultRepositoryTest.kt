@@ -35,8 +35,7 @@ class CitiesDefaultRepositoryTest{
         val city3 = City(3, "City3", countryId)
         localDataSource.addCities(city1, city2, city3)
 
-        subject.fetchCitiesByCountryId(countryId)
-        val citiesLoaded = subject.cities.getOrAwaitValue()
+        val citiesLoaded = subject.fetchCitiesByCountryId(countryId)
         assertThat(citiesLoaded.size, `is`(3))
     }
 
