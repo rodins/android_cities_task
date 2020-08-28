@@ -19,7 +19,7 @@ class CountriesDefaultRepositoryTest {
 
     private val remoteCountriesMap = mapOf(
         "Country4" to listOf("City10", "City11", "City12"),
-        "Country5" to listOf("City13", "City14", "City15", "City19"),
+        "Country5" to listOf("City13", "City14", "City15", "City19", ""),
         "Country6" to listOf("City16", "City17", "City18"),
         "" to listOf()
     )
@@ -50,7 +50,7 @@ class CountriesDefaultRepositoryTest {
     }
 
     @Test
-    fun getRemoteCountries_countriesSizeEquals() = runBlockingTest{
+    fun getRemoteCountries_countriesSizeEquals() = runBlockingTest {
         subject.loadCountriesAndCitiesToDb()
 
         val countriesLoaded = subject.getCountries()
@@ -58,14 +58,14 @@ class CountriesDefaultRepositoryTest {
     }
 
     @Test
-   fun getRemoteCountries_citiesSizeEquals() = runBlockingTest {
-       subject.loadCountriesAndCitiesToDb()
+    fun getRemoteCountries_citiesSizeEquals() = runBlockingTest {
+        subject.loadCountriesAndCitiesToDb()
 
-       val countriesLoaded = subject.getCountries()
-       val country5 = countriesLoaded.find {
-           it.name == "Country5"
-       }
-       val citiesLoaded = localDataSource.getCitiesByCountryId(country5?.id!!)
-       assertThat(citiesLoaded.size, `is`(4))
-   }
+        val countriesLoaded = subject.getCountries()
+        val country5 = countriesLoaded.find {
+            it.name == "Country5"
+        }
+        val citiesLoaded = localDataSource.getCitiesByCountryId(country5?.id!!)
+        assertThat(citiesLoaded.size, `is`(4))
+    }
 }
