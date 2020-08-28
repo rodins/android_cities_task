@@ -37,17 +37,6 @@ class CitiesDatabaseDaoTest {
     fun closeDb() = citiesDatabase.close()
 
     @Test
-    fun insertAndGetCountry() {
-        val country1 = Country(1, "Country1")
-        val country2 = Country(2, "Country2")
-        val countries = listOf(country1, country2)
-        citiesDatabase.citiesDatabaseDao.insertCountries(countries)
-
-        val list = citiesDatabase.citiesDatabaseDao.getCountries().getOrAwaitValue()
-        assertThat(list[0].name, `is`(country1.name))
-    }
-
-    @Test
     fun insertAndGetCountryFromList() {
         val country1 = Country(1, "Country1")
         val country2 = Country(2, "Country2")
@@ -83,7 +72,7 @@ class CitiesDatabaseDaoTest {
         citiesDatabase.citiesDatabaseDao.insertCountries(countries)
         citiesDatabase.citiesDatabaseDao.deleteAllCountries()
 
-        val loaded = citiesDatabase.citiesDatabaseDao.getCountries().getOrAwaitValue()
+        val loaded = citiesDatabase.citiesDatabaseDao.getCountriesList()
         assertThat(loaded.size, `is`(0))
     }
 }
