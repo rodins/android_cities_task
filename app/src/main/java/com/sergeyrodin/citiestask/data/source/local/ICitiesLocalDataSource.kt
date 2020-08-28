@@ -7,8 +7,6 @@ import com.sergeyrodin.citiestask.data.source.Country
 interface ICitiesLocalDataSource {
     suspend fun insertCountries(countries: List<Country>)
 
-    fun getCountries(): LiveData<List<Country>>
-
     suspend fun getCountriesList(): List<Country>
 
     suspend fun insertCities(cities: List<City>)

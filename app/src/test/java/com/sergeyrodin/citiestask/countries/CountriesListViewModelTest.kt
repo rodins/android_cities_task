@@ -29,6 +29,8 @@ class CountriesListViewModelTest{
         val country = Country(1, "Country")
         repository.addCountries(country)
 
+        subject.start()
+
         val loaded = subject.countries.getOrAwaitValue()
         assertThat(loaded[0].name, `is`(country.name))
     }
@@ -37,29 +39,17 @@ class CountriesListViewModelTest{
     fun noCountries_sizeZero() {
         repository.addCountries()
 
+        subject.start()
+
         val loaded = subject.countries.getOrAwaitValue()
         assertThat(loaded.size, `is`(0))
     }
 
     @Test
-    fun loadingMode_loadingIsTrue() {
-        repository.loadingMode()
-
-        val loaded = subject.loading.getOrAwaitValue()
-        assertThat(loaded, `is`(true))
-    }
-
-    @Test
-    fun errorMode_loadingFalse() {
-        repository.errorMode()
-
-        val loaded = subject.loading.getOrAwaitValue()
-        assertThat(loaded, `is`(false))
-    }
-
-    @Test
     fun errorMode_errorEquals() {
         repository.errorMode()
+
+        subject.start()
 
         val loaded = subject.error.getOrAwaitValue()
         assertThat(loaded, `is`("Error"))
@@ -70,7 +60,7 @@ class CountriesListViewModelTest{
         val json = mapOf("Country" to listOf("City1", "City2", "City3"))
         repository.addJsonMap(json)
 
-        subject.loadCountries()
+        subject.start()
 
         val loaded = subject.countries.getOrAwaitValue()
         assertThat(loaded[0].name, `is`("Country"))
@@ -83,6 +73,8 @@ class CountriesListViewModelTest{
         val json = mapOf("Country from net" to listOf("City1", "City2", "City3"))
         repository.addJsonMap(json)
 
+        subject.start()
+
         val loaded = subject.countries.getOrAwaitValue()
         assertThat(loaded[0].name, `is`(country.name))
     }
@@ -93,6 +85,8 @@ class CountriesListViewModelTest{
         repository.addCountries(country)
         val json = mapOf("Country from net" to listOf("City1", "City2", "City3"))
         repository.addJsonMap(json)
+
+        subject.start()
 
         subject.refresh()
 

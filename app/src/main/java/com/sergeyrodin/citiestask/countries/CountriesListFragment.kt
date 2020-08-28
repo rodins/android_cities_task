@@ -37,17 +37,12 @@ class CountriesListFragment : Fragment() {
             )
         })
 
+        viewModel.start()
+
         swipeRefresh = binding.swiperefresh
         swipeRefresh.setOnRefreshListener {
             viewModel.refresh()
         }
-
-        viewModel.countries.observe(viewLifecycleOwner, Observer{
-            if(it.isEmpty()) {
-                swipeRefresh.isRefreshing = true
-                viewModel.loadCountries()
-            }
-        })
 
         viewModel.loading.observe(viewLifecycleOwner, Observer{ isLoading ->
             if(!isLoading) {

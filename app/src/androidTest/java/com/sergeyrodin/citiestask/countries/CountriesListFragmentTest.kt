@@ -74,6 +74,7 @@ class CountriesListFragmentTest {
 
     @Test
     fun errorMode_errorDisplayed() {
+        repository.addCountries()
         repository.errorMode()
 
         launchFragmentInContainer<CountriesListFragment>(null, R.style.AppTheme)

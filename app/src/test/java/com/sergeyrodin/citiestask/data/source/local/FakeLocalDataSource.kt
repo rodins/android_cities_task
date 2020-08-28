@@ -8,23 +8,17 @@ import com.sergeyrodin.citiestask.data.source.Country
 class FakeLocalDataSource(private val countriesList: MutableList<Country> = mutableListOf(),
                           private val citiesList: MutableList<City> = mutableListOf()):
     ICitiesLocalDataSource {
-    private val countriesLiveData = MutableLiveData<List<Country>>(countriesList)
 
     fun addCountries(vararg country: Country) {
         for(item in country) {
             countriesList.add(item)
         }
-        countriesLiveData.value = countriesList
     }
 
     fun addCities(vararg city: City) {
         for(item in city) {
             citiesList.add(item)
         }
-    }
-
-    override fun getCountries(): LiveData<List<Country>>{
-        return countriesLiveData
     }
 
     override suspend fun getCountriesList(): List<Country> {
@@ -37,7 +31,6 @@ class FakeLocalDataSource(private val countriesList: MutableList<Country> = muta
             country.id = countryId++
         }
         countriesList.addAll(countries)
-        countriesLiveData.value = countriesList
     }
 
     override suspend fun getCitiesByCountryId(countryId: Long): List<City> {

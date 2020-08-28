@@ -39,13 +39,13 @@ class CountriesDefaultRepositoryTest {
     }
 
     @Test
-    fun getCountries_sizeEquals() {
+    fun getCountries_sizeEquals() = runBlockingTest {
         val country1 = Country(1, "Country1")
         val country2 = Country(2, "Country2")
         val country3 = Country(3, "Country3")
         localDataSource.addCountries(country1, country2, country3)
 
-        val countriesLoaded = subject.getCountries().getOrAwaitValue()
+        val countriesLoaded = subject.getCountries()
         MatcherAssert.assertThat(countriesLoaded.size, `is`(3))
     }
 
@@ -53,7 +53,7 @@ class CountriesDefaultRepositoryTest {
     fun getRemoteCountries_countriesSizeEquals() = runBlockingTest{
         subject.loadCountriesAndCitiesToDb()
 
-        val countriesLoaded = subject.getCountries().getOrAwaitValue()
+        val countriesLoaded = subject.getCountries()
         MatcherAssert.assertThat(countriesLoaded.size, `is`(3))
     }
 
@@ -61,19 +61,11 @@ class CountriesDefaultRepositoryTest {
    fun getRemoteCountries_citiesSizeEquals() = runBlockingTest {
        subject.loadCountriesAndCitiesToDb()
 
-       val countriesLoaded = subject.getCountries().getOrAwaitValue()
+       val countriesLoaded = subject.getCountries()
        val country5 = countriesLoaded.find {
            it.name == "Country5"
        }
        val citiesLoaded = localDataSource.getCitiesByCountryId(country5?.id!!)
        assertThat(citiesLoaded.size, `is`(4))
    }
-
-    @Test
-    fun errorMode_errorEquals() {
-        remoteDataSource.setError()
-
-        val error = subject.error.getOrAwaitValue()
-        MatcherAssert.assertThat(error, `is`("Error"))
-    }
 }
