@@ -34,7 +34,9 @@ class CountriesListViewModel(private val repository: CountriesRepository) : View
     fun refresh() {
         viewModelScope.launch {
             repository.deleteAllCountries()
+            _countries.value = null
             fetchCountriesFromNet()
+            fetchCountriesFromDb()
         }
     }
 
