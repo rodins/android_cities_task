@@ -15,10 +15,4 @@ class CitiesDefaultRepository(
             return localDataSource.getCitiesByCountryId(countryId)
         }
     }
-
-    override suspend fun insertCities(cities: List<City>) {
-        wrapEspressoIdlingResource {
-            localDataSource.insertCities(cities)
-        }
-    }
 }

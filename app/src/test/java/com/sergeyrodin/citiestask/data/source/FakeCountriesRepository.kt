@@ -20,10 +20,6 @@ class FakeCountriesRepository: CountriesRepository {
         this.json = json
     }
 
-    override suspend fun insertCountries(countries: List<Country>) {
-        countriesList.addAll(countries)
-    }
-
     override suspend fun getCountries(): List<Country> {
         return countriesList
     }

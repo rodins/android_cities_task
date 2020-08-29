@@ -15,12 +15,6 @@ class CountriesDefaultRepository(
         }
     }
 
-    override suspend fun insertCountries(countries: List<Country>) {
-        wrapEspressoIdlingResource {
-            return localDataSource.insertCountries(countries)
-        }
-    }
-
     override suspend fun deleteAllCountries() {
         wrapEspressoIdlingResource {
             localDataSource.deleteAllCountries()

@@ -20,8 +20,4 @@ class FakeCitiesRepository: CitiesRepository {
             it.countryId == countryId
         }
     }
-
-    override suspend fun insertCities(cities: List<City>) {
-        citiesList.addAll(cities)
-    }
 }

@@ -26,10 +26,6 @@ class FakeCountriesRepository: CountriesRepository {
         return countriesList
     }
 
-    override suspend fun insertCountries(countries: List<Country>) {
-        countriesList.addAll(countries)
-    }
-
     override suspend fun loadCountriesAndCitiesToDb() {
         if(error) {
             throw Exception("Error")

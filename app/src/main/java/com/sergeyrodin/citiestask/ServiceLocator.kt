@@ -29,6 +29,9 @@ object ServiceLocator {
         @VisibleForTesting set
 
     @Volatile
+    var citiesLocalDataSource: CitiesLocalDataSource? = null
+
+    @Volatile
     var cityInfoPresenter: ICityInfoPresenter? = null
         @VisibleForTesting set
 
@@ -45,6 +48,7 @@ object ServiceLocator {
             database = null
             countriesRepository = null
             citiesRepository = null
+            citiesLocalDataSource = null
         }
     }
 
@@ -62,6 +66,12 @@ object ServiceLocator {
     fun provideCitiesRepository(context: Context): CitiesRepository {
         synchronized(this) {
             return citiesRepository ?: createCitiesRepository(context)
+        }
+    }
+
+    fun provideCitiesLocalDataSource(context: Context): ICitiesLocalDataSource {
+        synchronized(this) {
+            return citiesLocalDataSource ?: createCitiesLocalDataSource(context)
         }
     }
 
@@ -87,7 +97,9 @@ object ServiceLocator {
 
     private fun createCitiesLocalDataSource(context: Context): ICitiesLocalDataSource {
         val database = database ?: createDatabase(context)
-        return CitiesLocalDataSource(database.citiesDatabaseDao)
+        val dataSource = CitiesLocalDataSource(database.citiesDatabaseDao)
+        citiesLocalDataSource = dataSource
+        return dataSource
     }
 
     private fun createDatabase(context: Context): CitiesDatabase {
