@@ -45,9 +45,7 @@ class CountriesListFragment : Fragment() {
         }
 
         viewModel.loading.observe(viewLifecycleOwner, Observer{ isLoading ->
-            if(!isLoading) {
-                swipeRefresh.isRefreshing = false
-            }
+            swipeRefresh.isRefreshing = isLoading
         })
 
         viewModel.error.observe(viewLifecycleOwner, Observer{ error ->
