@@ -44,10 +44,6 @@ class CountriesListFragment : Fragment() {
             viewModel.refresh()
         }
 
-        viewModel.loading.observe(viewLifecycleOwner, Observer{ isLoading ->
-            swipeRefresh.isRefreshing = isLoading
-        })
-
         viewModel.error.observe(viewLifecycleOwner, Observer{ error ->
             if(error.isNotEmpty()) {
                 Snackbar.make(requireView(), error, Snackbar.LENGTH_LONG).show()

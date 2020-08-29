@@ -14,13 +14,14 @@
         android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:refreshing = "@{viewModel.loading}"
         tools:context=".countries.CountriesListFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/countries_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="8dp"
+            android:layout_margin="@dimen/list_margin"
             app:countriesListData="@{viewModel.countries}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
