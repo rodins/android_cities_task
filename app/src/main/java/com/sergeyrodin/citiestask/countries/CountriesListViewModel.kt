@@ -25,7 +25,6 @@ class CountriesListViewModel(private val repository: CountriesRepository) : View
                 fetchCountriesFromDb()
                 if(countries.value?.isEmpty() == true) {
                     fetchCountriesFromNet()
-                    fetchCountriesFromDb()
                 }
             }
         }
@@ -36,7 +35,6 @@ class CountriesListViewModel(private val repository: CountriesRepository) : View
             repository.deleteAllCountries()
             _countries.value = null
             fetchCountriesFromNet()
-            fetchCountriesFromDb()
         }
     }
 
@@ -48,6 +46,7 @@ class CountriesListViewModel(private val repository: CountriesRepository) : View
         try{
             _loading.value = true
             repository.loadCountriesAndCitiesToDb()
+            fetchCountriesFromDb()
         }catch(e: Exception) {
             _error.value = e.localizedMessage
         }finally {
